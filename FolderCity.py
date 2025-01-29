@@ -160,7 +160,7 @@ def setup_welcome_center():
     create_symlink(welcome_center, app_folder)
 
     # Create a marker file
-    create_empty_file(welcome_center / "the welcome center")
+    create_empty_file(welcome_center / "[ the welcome center ]")
 
 # Run setup functions
 setup_streets_and_avenues()
