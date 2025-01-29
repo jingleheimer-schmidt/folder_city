@@ -115,7 +115,7 @@ def setup_additional_locations():
         create_directory(BASEMENT / f"unmarked box/old usb flash drive/users/home/{directory}")
 
     # Filing cabinet
-    filing_drawers = ["open top drawer", "open middle drawer", "open bottom drawer"]
+    filing_drawers = ["top drawer", "middle drawer", "bottom drawer"]
     for drawer in filing_drawers:
         create_directory(BASEMENT / f"filing cabinet/{drawer}")
 
@@ -129,23 +129,41 @@ def setup_additional_locations():
     upstairs_paths = [
         "go upstairs/go to the balcony",
         "go upstairs/go to the washroom",
-        "go upstairs/go to the bedroom/open dresser"
+        "go upstairs/go to the bedroom/dresser",
+        "go upstairs/go to the bedroom/dresser/top drawer",
+        "go upstairs/go to the bedroom/dresser/middle drawer",
+        "go upstairs/go to the bedroom/dresser/bottom drawer",
     ]
     for path in upstairs_paths:
         create_directory(OG_PATH / f"the welcome center/{path}")
 
     # Individual items
     item_paths = [
-        "go upstairs/go to the bedroom/a bed",
-        "go upstairs/go to the washroom/a toilet",
-        "go upstairs/go to the washroom/a sink",
-        "go upstairs/go to the washroom/a bathtub",
-        "go to the kitchen/a stove",
-        "go to the kitchen/a sink",
-        "go to the kitchen/a table"
+        "go upstairs/go to the bedroom/bed",
+        "go upstairs/go to the washroom/toilet",
+        "go upstairs/go to the washroom/sink",
+        "go upstairs/go to the washroom/bathtub",
+        "go to the kitchen/stove",
+        "go to the kitchen/sink",
+        "go to the kitchen/table",
     ]
     for item in item_paths:
         create_empty_file(OG_PATH / f"the welcome center/{item}")
+    
+    # Kitchen utensils
+    for i in range(12, 21):
+        create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/forks/fork_00{i}")
+    for i in range(15, 26):
+        create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{i}")
+    for i in range(11, 14):
+        create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/knives/knife_00{i}")
+    shelf_paths = [
+        "go to the kitchen/cabinet/top shelf",
+        "go to the kitchen/cabinet/middle shelf",
+        "go to the kitchen/cabinet/bottom shelf",
+    ]
+    for shelf in shelf_paths:
+        create_directory(OG_PATH / f"the welcome center/{shelf}")
 
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
