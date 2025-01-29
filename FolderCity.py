@@ -162,8 +162,16 @@ def setup_welcome_center():
     # Create a marker file
     create_empty_file(welcome_center / "[ the welcome center ]")
 
+def setup_library():
+    """Create the library building."""
+    block_location = CITY_PATH / "horizontals/Juniper St blocks/2000-2099 Juniper St"
+    library_path = block_location / "2025 Juniper St - the library"
+    create_empty_file(library_path / "[ the juniper st library ]")
+    create_symlink(block_location, library_path / "go out the front door")
+
 # Run setup functions
 setup_streets_and_avenues()
 setup_navigation()
 setup_additional_locations()
 setup_welcome_center()
+setup_library()
