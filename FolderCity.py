@@ -1,160 +1,169 @@
 import os
 from pathlib import Path
 
-# here are my tables of values
-street_names = [
-    "Birch St",
-    "Chestnut St",
-    "Oak St",
-    "Juniper St",
-    "Pine St",
-    "Maple St",
-    "Willow St"
-]
-avenue_names = [
-    "Ocean Ave",
-    "California Dr",
-    "Mission Ave",
-    "Hollow Dr",
-    "Sunset Ln",
-    "Broad Way",
-    "Market Ave"
-]
-street_numbers = [
-    "1600-1699",
-    "1700-1799",
-    "1800-1899",
-    "1900-1999",
-    "2000-2099",
-    "2100-2199",
-    "2200-2299",
-    # "2300-2399"
-]
-avenue_numbers = [
-    "100-199",
-    "200-299",
-    "300-399",
-    "400-499",
-    "500-599",
-    "600-699",
-    "700-799",
-    # "100-199",
+# Define street and avenue names
+STREET_NAMES = [
+    "Birch St", "Chestnut St", "Oak St", "Juniper St",
+    "Pine St", "Maple St", "Willow St"
 ]
 
-og_path = os.getcwd()  # this one gets the current path of where the py file is located
-basement = Path(f"{og_path}/the welcome center/go to the basement")
-application_support = Path(f"{basement}/unmarked box/old usb flash drive/users/home/library/application support")
-path = f"{application_support}/folder city alpha/map contents"
+AVENUE_NAMES = [
+    "Ocean Ave", "California Dr", "Mission Ave", "Hollow Dr",
+    "Sunset Ln", "Broad Way", "Market Ave"
+]
 
-for street in street_names:
-    street_path = Path(f"{path}/horizontals/{street} blocks")
-    os.makedirs(street_path, exist_ok=True)  # make the street block folders
-    for st_number in street_numbers:
-        os.makedirs(f"{street_path}/{st_number} {street}", exist_ok=True)  # make the block number folders
-        Path(f"{street_path}/{st_number} {street}/{st_number} {street}").write_text("")  # write the signpost files
-        for avenue in avenue_names:
-            avenue_path = Path(f"{path}/verticals/{avenue} blocks")
-            os.makedirs(avenue_path, exist_ok=True)
-            for av_number in avenue_numbers:
-                os.makedirs(f"{avenue_path}/{av_number} {avenue}", exist_ok=True)  # make the block number folders
-                Path(f"{avenue_path}/{av_number} {avenue}/{av_number} {avenue}").write_text("")  # create the signposts
+STREET_NUMBERS = [
+    "1600-1699", "1700-1799", "1800-1899", "1900-1999",
+    "2000-2099", "2100-2199", "2200-2299"
+]
 
-                intersection_path = Path(f"{path}/intersections/{street} & {avenue}")
-                os.makedirs(intersection_path, exist_ok=True)
-                Path(f"{intersection_path}/{street} & {avenue}").write_text("")
+AVENUE_NUMBERS = [
+    "100-199", "200-299", "300-399", "400-499",
+    "500-599", "600-699", "700-799"
+]
 
-for street in street_names:
-    street_path = Path(f"{path}/horizontals/{street} blocks")
-    # index = street_names.index(street)
-    for st_number in street_numbers:
-        index = street_numbers.index(st_number)
-        block = Path(f"{street_path}/{st_number} {street}")
-        east_avenue = avenue_names[index]
-        west_avenue = avenue_names[index - 1]
-        east_intersection = Path(f"{path}/intersections/{street} & {east_avenue}")
-        west_intersection = Path(f"{path}/intersections/{street} & {west_avenue}")
-        if index == 0:
-            os.symlink(block, Path(f"{east_intersection}/go west to {st_number} {street}"))
-            os.symlink(east_intersection, Path(f"{block}/go east to {street} & {east_avenue}"))
+# Get the current working directory
+OG_PATH = Path(os.getcwd())
 
-        # elif index == street_numbers.index(street_numbers[-1]):
-        #     os.symlink(block, Path(f"{west_intersection}/go east to {st_number} {street}"))
-        #     os.symlink(west_intersection, Path(f"{block}/go west to {street} & {west_avenue}"))
-        #
-        #     os.symlink(block, Path(f"{east_intersection}/go west to {st_number} {street}"))
-        #     os.symlink(east_intersection, Path(f"{block}/go east to {street} & {east_avenue}"))
+# Define key locations
+BASEMENT = OG_PATH / "the welcome center/go to the basement"
+APPLICATION_SUPPORT = BASEMENT / "unmarked box/old usb flash drive/users/home/library/application support"
+CITY_PATH = APPLICATION_SUPPORT / "folder city alpha/map contents"
 
-        else:
-            os.symlink(block, Path(f"{east_intersection}/go west to {st_number} {street}"))
-            os.symlink(east_intersection, Path(f"{block}/go east to {street} & {east_avenue}"))
+def create_directory(path):
+    """Create a directory if it doesn't already exist."""
+    os.makedirs(path, exist_ok=True)
 
-            os.symlink(block, Path(f"{west_intersection}/go east to {st_number} {street}"))
-            os.symlink(west_intersection, Path(f"{block}/go west to {street} & {west_avenue}"))
+def create_empty_file(path):
+    """Create an empty file, ensuring the parent directory exists first."""
+    path.parent.mkdir(parents=True, exist_ok=True)  # Ensure parent directory exists
+    if not path.exists():
+        path.write_text("")
 
-for avenue in avenue_names:
-    avenue_path = Path(f"{path}/verticals/{avenue} blocks")
-    # index = street_names.index(street)
-    for av_number in avenue_numbers:
-        index = avenue_numbers.index(av_number)
-        south_street = street_names[index]
-        north_street = street_names[index - 1]
-        block = Path(f"{avenue_path}/{av_number} {avenue}")
-        south_intersection = Path(f"{path}/intersections/{south_street} & {avenue}")
-        north_intersection = Path(f"{path}/intersections/{north_street} & {avenue}")
-        if index == 0:
-            os.symlink(block, Path(f"{south_intersection}/go north to {av_number} {avenue}"))
-            os.symlink(south_intersection, Path(f"{block}/go south to {south_street} & {avenue}"))
+def create_symlink(target, link_name):
+    """Create a symbolic link if it doesn't already exist."""
+    if not link_name.exists():
+        os.symlink(target, link_name)
 
-        # elif index == avenue_numbers.index(avenue_numbers[-1]):
-        #     os.symlink(block, Path(f"{north_intersection}/go south to {av_number} {avenue}"))
-        #     os.symlink(north_intersection, Path(f"{block}/go north to {north_street} & {avenue}"))
-        #
-        #     os.symlink(block, Path(f"{south_intersection}/go north to {av_number} {avenue}"))
-        #     os.symlink(south_intersection, Path(f"{block}/go south to {south_street} & {avenue}"))
+def setup_streets_and_avenues():
+    """Create directories for streets, avenues, and their intersections."""
+    for street in STREET_NAMES:
+        street_path = CITY_PATH / f"horizontals/{street} blocks"
+        create_directory(street_path)
+        
+        for st_number in STREET_NUMBERS:
+            block_path = street_path / f"{st_number} {street}"
+            create_directory(block_path)
+            create_empty_file(block_path / f"[ {st_number} {street} ]")
 
-        else:
-            os.symlink(block, Path(f"{south_intersection}/go north to {av_number} {avenue}"))
-            os.symlink(south_intersection, Path(f"{block}/go south to {south_street} & {avenue}"))
+            for avenue in AVENUE_NAMES:
+                avenue_path = CITY_PATH / f"verticals/{avenue} blocks"
+                create_directory(avenue_path)
+                
+                for av_number in AVENUE_NUMBERS:
+                    av_block_path = avenue_path / f"{av_number} {avenue}"
+                    create_directory(av_block_path)
+                    create_empty_file(av_block_path / f"[ {av_number} {avenue} ]")
+                    
+                    intersection_path = CITY_PATH / f"intersections/{street} & {avenue}"
+                    create_directory(intersection_path)
+                    create_empty_file(intersection_path / f"[ {street} & {avenue} ]")
 
-            os.symlink(block, Path(f"{north_intersection}/go south to {av_number} {avenue}"))
-            os.symlink(north_intersection, Path(f"{block}/go north to {north_street} & {avenue}"))
+def setup_navigation():
+    """Create symbolic links between streets and avenues for navigation."""
+    for street in STREET_NAMES:
+        street_path = CITY_PATH / f"horizontals/{street} blocks"
 
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/guest")
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/home/movies")
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/home/music")
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/home/pictures")
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/home/public")
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/home/downloads")
-os.makedirs(f"{basement}/unmarked box/old usb flash drive/users/home/applications/folder city")
-os.makedirs(f"{basement}/filing cabinet/open top drawer")
-os.makedirs(f"{basement}/filing cabinet/open middle drawer")
-os.makedirs(f"{basement}/filing cabinet/open bottom drawer")
-os.makedirs(f"{basement}/unmarked box/box of paperclips")
-i = 1
-while i <= 250:
-    Path(f"{basement}/unmarked box/box of paperclips/paperclip {i}").write_text("")
-    i += 1
-os.makedirs(f"{og_path}/the welcome center/go upstairs/go to the balcony")
-os.makedirs(f"{og_path}/the welcome center/go upstairs/go to the washroom")
-os.makedirs(f"{og_path}/the welcome center/go upstairs/go to the bedroom/open dresser")
-Path(f"{og_path}/the welcome center/go upstairs/go to the bedroom/a bed").write_text("")
-Path(f"{og_path}/the welcome center/go upstairs/go to the washroom/a toilet").write_text("")
-Path(f"{og_path}/the welcome center/go upstairs/go to the washroom/a sink").write_text("")
-Path(f"{og_path}/the welcome center/go upstairs/go to the washroom/a bathtub").write_text("")
-os.makedirs(f"{og_path}/the welcome center/go to the living room")
-os.makedirs(f"{og_path}/the welcome center/go to the kitchen")
-Path(f"{og_path}/the welcome center/go to the kitchen/a stove").write_text("")
-Path(f"{og_path}/the welcome center/go to the kitchen/a sink").write_text("")
-Path(f"{og_path}/the welcome center/go to the kitchen/a table").write_text("")
+        for index, st_number in enumerate(STREET_NUMBERS):
+            block = street_path / f"{st_number} {street}"
 
-welcome_center = Path(f"{og_path}/the welcome center")
-wc_sym = Path(f"{path}/horizontals/Juniper St blocks/1900-1999 Juniper St/1995 Juniper St - the welcome center")
-os.symlink(welcome_center, wc_sym)
+            if index < len(AVENUE_NAMES):
+                east_avenue = AVENUE_NAMES[index]
+                east_intersection = CITY_PATH / f"intersections/{street} & {east_avenue}"
+                create_symlink(block, east_intersection / f"go west to {st_number} {street}")
+                create_symlink(east_intersection, block / f"go east to {street} & {east_avenue}")
 
-block_location = Path(f"{path}/horizontals/Juniper St blocks/1900-1999 Juniper St")
-door_location = Path(f"{welcome_center}/go out the front door")
-os.symlink(block_location, door_location)
+            if index > 0:
+                west_avenue = AVENUE_NAMES[index - 1]
+                west_intersection = CITY_PATH / f"intersections/{street} & {west_avenue}"
+                create_symlink(block, west_intersection / f"go east to {st_number} {street}")
+                create_symlink(west_intersection, block / f"go west to {street} & {west_avenue}")
 
-app_folder = Path(f"{basement}/unmarked box/old usb flash drive/users/home/applications/folder city/the welcome center")
-os.symlink(welcome_center, app_folder)
-Path(f"{og_path}/the welcome center/the welcome center").write_text("")
+    for avenue in AVENUE_NAMES:
+        avenue_path = CITY_PATH / f"verticals/{avenue} blocks"
+
+        for index, av_number in enumerate(AVENUE_NUMBERS):
+            block = avenue_path / f"{av_number} {avenue}"
+
+            if index < len(STREET_NAMES):
+                south_street = STREET_NAMES[index]
+                south_intersection = CITY_PATH / f"intersections/{south_street} & {avenue}"
+                create_symlink(block, south_intersection / f"go north to {av_number} {avenue}")
+                create_symlink(south_intersection, block / f"go south to {south_street} & {avenue}")
+
+            if index > 0:
+                north_street = STREET_NAMES[index - 1]
+                north_intersection = CITY_PATH / f"intersections/{north_street} & {avenue}"
+                create_symlink(block, north_intersection / f"go south to {av_number} {avenue}")
+                create_symlink(north_intersection, block / f"go north to {north_street} & {avenue}")
+
+def setup_additional_locations():
+    """Create additional structures like the welcome center, filing cabinets, and a home directory."""
+    # Home structure
+    home_dirs = ["movies", "music", "pictures", "public", "downloads", "applications/folder city"]
+    for directory in home_dirs:
+        create_directory(BASEMENT / f"unmarked box/old usb flash drive/users/home/{directory}")
+
+    # Filing cabinet
+    filing_drawers = ["open top drawer", "open middle drawer", "open bottom drawer"]
+    for drawer in filing_drawers:
+        create_directory(BASEMENT / f"filing cabinet/{drawer}")
+
+    # Paperclip box
+    paperclip_box = BASEMENT / "unmarked box/box of paperclips"
+    create_directory(paperclip_box)
+    for i in range(1, 251):
+        create_empty_file(paperclip_box / f"paperclip {i}")
+
+    # Upstairs
+    upstairs_paths = [
+        "go upstairs/go to the balcony",
+        "go upstairs/go to the washroom",
+        "go upstairs/go to the bedroom/open dresser"
+    ]
+    for path in upstairs_paths:
+        create_directory(OG_PATH / f"the welcome center/{path}")
+
+    # Individual items
+    item_paths = [
+        "go upstairs/go to the bedroom/a bed",
+        "go upstairs/go to the washroom/a toilet",
+        "go upstairs/go to the washroom/a sink",
+        "go upstairs/go to the washroom/a bathtub",
+        "go to the kitchen/a stove",
+        "go to the kitchen/a sink",
+        "go to the kitchen/a table"
+    ]
+    for item in item_paths:
+        create_empty_file(OG_PATH / f"the welcome center/{item}")
+
+def setup_welcome_center():
+    """Link the welcome center to different locations in the folder city."""
+    welcome_center = OG_PATH / "the welcome center"
+    block_location = CITY_PATH / "horizontals/Juniper St blocks/1900-1999 Juniper St"
+
+    # Create symbolic links
+    create_symlink(welcome_center, block_location / "1995 Juniper St - the welcome center")
+    create_symlink(block_location, welcome_center / "go out the front door")
+    
+    app_folder = BASEMENT / "unmarked box/old usb flash drive/users/home/applications/folder city/the welcome center"
+    create_symlink(welcome_center, app_folder)
+
+    # Create a marker file
+    create_empty_file(welcome_center / "the welcome center")
+
+# Run setup functions
+setup_streets_and_avenues()
+setup_navigation()
+setup_additional_locations()
+setup_welcome_center()
