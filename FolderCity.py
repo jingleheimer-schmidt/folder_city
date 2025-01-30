@@ -153,11 +153,14 @@ def setup_additional_locations():
     
     # Kitchen utensils
     for i in range(12, 21):
-        create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/forks/fork_00{i}")
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/forks/fork_00{i}")
     for i in range(15, 26):
-        create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{i}")
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{i}")
     for i in range(11, 14):
-        create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/knives/knife_00{i}")
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/knives/knife_00{i}")
     shelf_paths = [
         "go to the kitchen/cabinet/top shelf",
         "go to the kitchen/cabinet/middle shelf",
