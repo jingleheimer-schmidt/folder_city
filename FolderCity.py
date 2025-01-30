@@ -167,8 +167,8 @@ def setup_additional_locations():
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{prefix}{i}")
         else:
-    for i in range(11, 14):
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/spoon_00{prefix}{i}")
+    for i in range(7, 14):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/knives/knife_00{prefix}{i}")
