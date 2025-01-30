@@ -144,13 +144,16 @@ def setup_additional_locations():
         "go upstairs/go to the washroom/toilet",
         "go upstairs/go to the washroom/sink",
         "go upstairs/go to the washroom/bathtub",
-        "go to the kitchen/stove",
         "go to the kitchen/sink",
         "go to the kitchen/table",
     ]
     for item in item_paths:
         create_empty_file(OG_PATH / f"the welcome center/{item}")
-    
+
+    create_directory(OG_PATH / f"the welcome center/go to the kitchen/stove/large pot")
+    create_empty_file(OG_PATH / "the welcome center/go to the kitchen/stove/large pot/ladle")
+    create_empty_file(OG_PATH / "the welcome center/go to the kitchen/stove/large pot/potato stew?")
+
     # Kitchen utensils
     clean_chance = 0.70
     for i in range(12, 21):
