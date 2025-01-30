@@ -1,4 +1,5 @@
 import os
+import random
 from pathlib import Path
 
 # Define street and avenue names
@@ -164,6 +165,17 @@ def setup_additional_locations():
     ]
     for shelf in shelf_paths:
         create_directory(OG_PATH / f"the welcome center/{shelf}")
+    for i in range(15, 32):
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/top shelf/cup_00{i}")
+    for i in range(1, 13):
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/middle shelf/large_plate_00{i}")
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/middle shelf/small_plate_00{i}")
+    for i in range(1, 9):
+        if random.random() < 0.8:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/bottom shelf/bowl_00{i}")
 
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
