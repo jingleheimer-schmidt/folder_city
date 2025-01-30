@@ -156,12 +156,18 @@ def setup_additional_locations():
     for i in range(12, 21):
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/forks/fork_00{i}")
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/fork_00{i}")
     for i in range(15, 26):
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{i}")
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/spoon_00{i}")
     for i in range(11, 14):
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/knives/knife_00{i}")
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/knife_00{i}")
     shelf_paths = [
         "go to the kitchen/cabinet/top shelf",
         "go to the kitchen/cabinet/middle shelf",
@@ -172,14 +178,22 @@ def setup_additional_locations():
     for i in range(15, 32):
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/top shelf/cup_00{i}")
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/cup_00{i}")
     for i in range(1, 13):
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/middle shelf/large_plate_00{i}")
-        if random.random() < 0.8:
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/large_plate_00{i}")
+        if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/middle shelf/small_plate_00{i}")
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/small_plate_00{i}")
     for i in range(1, 9):
         if random.random() < clean_chance:
             create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/bottom shelf/bowl_00{i}")
+        else:
+            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/bowl_00{i}")
 
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
