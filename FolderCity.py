@@ -81,14 +81,14 @@ def setup_navigation():
             if index < len(AVENUE_NAMES):
                 east_avenue = AVENUE_NAMES[index]
                 east_intersection = CITY_PATH / f"intersections/{street} & {east_avenue}"
-                create_symlink(block, east_intersection / f"go west to {st_number} {street}")
-                create_symlink(east_intersection, block / f"go east to {street} & {east_avenue}")
+                create_symlink(block, east_intersection / f"⏴ west to {st_number} {street}")
+                create_symlink(east_intersection, block / f"⏵ east to {street} & {east_avenue}")
 
             if index > 0:
                 west_avenue = AVENUE_NAMES[index - 1]
                 west_intersection = CITY_PATH / f"intersections/{street} & {west_avenue}"
-                create_symlink(block, west_intersection / f"go east to {st_number} {street}")
-                create_symlink(west_intersection, block / f"go west to {street} & {west_avenue}")
+                create_symlink(block, west_intersection / f"⏵ east to {st_number} {street}")
+                create_symlink(west_intersection, block / f"⏴ west to {street} & {west_avenue}")
 
     for avenue in AVENUE_NAMES:
         avenue_path = CITY_PATH / f"verticals/{avenue} blocks"
@@ -99,14 +99,14 @@ def setup_navigation():
             if index < len(STREET_NAMES):
                 south_street = STREET_NAMES[index]
                 south_intersection = CITY_PATH / f"intersections/{south_street} & {avenue}"
-                create_symlink(block, south_intersection / f"go north to {av_number} {avenue}")
-                create_symlink(south_intersection, block / f"go south to {south_street} & {avenue}")
+                create_symlink(block, south_intersection / f"⏶ north to {av_number} {avenue}")
+                create_symlink(south_intersection, block / f"⏷ south to {south_street} & {avenue}")
 
             if index > 0:
                 north_street = STREET_NAMES[index - 1]
                 north_intersection = CITY_PATH / f"intersections/{north_street} & {avenue}"
-                create_symlink(block, north_intersection / f"go south to {av_number} {avenue}")
-                create_symlink(north_intersection, block / f"go north to {north_street} & {avenue}")
+                create_symlink(block, north_intersection / f"⏷ south to {av_number} {avenue}")
+                create_symlink(north_intersection, block / f"⏶ north to {north_street} & {avenue}")
 
 def setup_additional_locations():
     """Create additional structures like the welcome center, filing cabinets, and a home directory."""
