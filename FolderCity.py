@@ -27,7 +27,7 @@ AVENUE_NUMBERS = [
 OG_PATH = Path(os.getcwd())
 
 # Define key locations
-BASEMENT = OG_PATH / "the welcome center/go to the basement"
+BASEMENT = OG_PATH / "the welcome center/basement"
 APPLICATION_SUPPORT = BASEMENT / "unmarked box/old usb flash drive/users/home/library/application support"
 CITY_PATH = APPLICATION_SUPPORT / "folder city alpha/map contents"
 
@@ -128,81 +128,81 @@ def setup_additional_locations():
 
     # Upstairs
     upstairs_paths = [
-        "go upstairs/go to the balcony",
-        "go upstairs/go to the washroom",
-        "go upstairs/go to the bedroom/dresser",
-        "go upstairs/go to the bedroom/dresser/top drawer",
-        "go upstairs/go to the bedroom/dresser/middle drawer",
-        "go upstairs/go to the bedroom/dresser/bottom drawer",
+        "upstairs/balcony",
+        "upstairs/washroom",
+        "upstairs/bedroom/dresser",
+        "upstairs/bedroom/dresser/top drawer",
+        "upstairs/bedroom/dresser/middle drawer",
+        "upstairs/bedroom/dresser/bottom drawer",
     ]
     for path in upstairs_paths:
         create_directory(OG_PATH / f"the welcome center/{path}")
 
     # Individual items
     item_paths = [
-        "go upstairs/go to the bedroom/bed",
-        "go upstairs/go to the washroom/toilet",
-        "go upstairs/go to the washroom/sink",
-        "go upstairs/go to the washroom/bathtub",
-        "go to the kitchen/sink",
-        "go to the kitchen/table",
+        "upstairs/bedroom/bed",
+        "upstairs/washroom/toilet",
+        "upstairs/washroom/sink",
+        "upstairs/washroom/bathtub",
+        "kitchen/sink",
+        "kitchen/table",
     ]
     for item in item_paths:
         create_empty_file(OG_PATH / f"the welcome center/{item}")
 
-    create_directory(OG_PATH / f"the welcome center/go to the kitchen/stove/large pot")
-    create_empty_file(OG_PATH / "the welcome center/go to the kitchen/stove/large pot/ladle")
-    create_empty_file(OG_PATH / "the welcome center/go to the kitchen/stove/large pot/potato stew?")
+    create_directory(OG_PATH / f"the welcome center/kitchen/stove/large pot")
+    create_empty_file(OG_PATH / "the welcome center/kitchen/stove/large pot/ladle")
+    create_empty_file(OG_PATH / "the welcome center/kitchen/stove/large pot/potato stew?")
 
     # Kitchen utensils
     clean_chance = 1
     for i in range(12, 21):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/forks/fork_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/forks/fork_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/fork_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/fork_00{prefix}{i}")
     for i in range(15, 26):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/spoon_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/spoon_00{prefix}{i}")
     for i in range(7, 14):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/drawer/utensil tray/knives/knife_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/knives/knife_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/knife_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/knife_00{prefix}{i}")
     shelf_paths = [
-        "go to the kitchen/cabinet/top shelf",
-        "go to the kitchen/cabinet/middle shelf",
-        "go to the kitchen/cabinet/bottom shelf",
+        "kitchen/cabinet/top shelf",
+        "kitchen/cabinet/middle shelf",
+        "kitchen/cabinet/bottom shelf",
     ]
     for shelf in shelf_paths:
         create_directory(OG_PATH / f"the welcome center/{shelf}")
     for i in range(15, 32):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/top shelf/cup_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/top shelf/cup_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/cup_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/cup_00{prefix}{i}")
     for i in range(1, 13):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/middle shelf/large_plate_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/middle shelf/large_plate_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/large_plate_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/large_plate_00{prefix}{i}")
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/middle shelf/small_plate_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/middle shelf/small_plate_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/small_plate_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/small_plate_00{prefix}{i}")
     for i in range(1, 9):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/cabinet/bottom shelf/bowl_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/cabinet/bottom shelf/bowl_00{prefix}{i}")
         else:
-            create_empty_file(OG_PATH / f"the welcome center/go to the kitchen/dishwasher/bowl_00{prefix}{i}")
+            create_empty_file(OG_PATH / f"the welcome center/kitchen/dishwasher/bowl_00{prefix}{i}")
 
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
@@ -211,7 +211,7 @@ def setup_welcome_center():
 
     # Create symbolic links
     create_symlink(welcome_center, block_location / "1995 Juniper St - the welcome center")
-    create_symlink(block_location, welcome_center / "go out the front door")
+    create_symlink(block_location, welcome_center / "front door")
     
     app_folder = BASEMENT / "unmarked box/old usb flash drive/users/home/applications/folder city/the welcome center"
     create_symlink(welcome_center, app_folder)
@@ -224,7 +224,7 @@ def setup_library():
     block_location = CITY_PATH / "horizontals/Juniper St blocks/2000-2099 Juniper St"
     library_path = block_location / "2025 Juniper St - the library"
     create_empty_file(library_path / "[ the juniper st library ]")
-    create_symlink(block_location, library_path / "go out the front door")
+    create_symlink(block_location, library_path / "front door")
 
 # Run setup functions
 setup_streets_and_avenues()
