@@ -225,6 +225,12 @@ def setup_library():
     library_path = block_location / "2025 Juniper St - the library"
     create_empty_file(library_path / "[ the juniper st library ]")
     create_symlink(block_location, library_path / "front door")
+    fiction_books = [ "a brief history of map quests", "home, again", "deep ocean", "hello ily", "goblin tombs 2" ]
+    nonfiction_books = [ "the second house", "in too deep: the true story of the ultimate unsinkable submarine", "how to identify animal bites", "nobosy knows"]
+    for book in fiction_books:
+        create_empty_file(library_path / f"fiction/{book}")
+    for book in nonfiction_books:
+        create_empty_file(library_path / f"nonfiction/{book}")
 
 # Run setup functions
 setup_streets_and_avenues()
