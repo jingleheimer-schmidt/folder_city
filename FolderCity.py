@@ -29,7 +29,7 @@ BASE_PATH = Path(os.getcwd())
 # Define key locations
 BASEMENT = BASE_PATH / "the welcome center/basement"
 APPLICATION_SUPPORT = BASEMENT / "unmarked box/old usb flash drive/users/home/library/application support"
-CITY_PATH = APPLICATION_SUPPORT / "folder city alpha/map contents"
+MAP_CONTENTS = APPLICATION_SUPPORT / "folder city alpha/map contents"
 
 def create_directory(path):
     """Create a directory if it doesn't already exist."""
@@ -49,7 +49,7 @@ def create_symlink(target, link_name):
 def setup_streets_and_avenues():
     """Create directories for streets, avenues, and their intersections."""
     for street in STREET_NAMES:
-        street_path = CITY_PATH / f"horizontals/{street} blocks"
+        street_path = MAP_CONTENTS / f"horizontals/{street} blocks"
         create_directory(street_path)
         
         for st_number in STREET_NUMBERS:
@@ -58,7 +58,7 @@ def setup_streets_and_avenues():
             create_empty_file(block_path / f"[ {st_number} {street} ]")
 
             for avenue in AVENUE_NAMES:
-                avenue_path = CITY_PATH / f"verticals/{avenue} blocks"
+                avenue_path = MAP_CONTENTS / f"verticals/{avenue} blocks"
                 create_directory(avenue_path)
                 
                 for av_number in AVENUE_NUMBERS:
@@ -66,45 +66,45 @@ def setup_streets_and_avenues():
                     create_directory(av_block_path)
                     create_empty_file(av_block_path / f"[ {av_number} {avenue} ]")
                     
-                    intersection_path = CITY_PATH / f"intersections/{street} & {avenue}"
+                    intersection_path = MAP_CONTENTS / f"intersections/{street} & {avenue}"
                     create_directory(intersection_path)
                     create_empty_file(intersection_path / f"[ {street} & {avenue} ]")
 
 def setup_navigation():
     """Create symbolic links between streets and avenues for navigation."""
     for street in STREET_NAMES:
-        street_path = CITY_PATH / f"horizontals/{street} blocks"
+        street_path = MAP_CONTENTS / f"horizontals/{street} blocks"
 
         for index, st_number in enumerate(STREET_NUMBERS):
             block = street_path / f"{st_number} {street}"
 
             if index < len(AVENUE_NAMES):
                 east_avenue = AVENUE_NAMES[index]
-                east_intersection = CITY_PATH / f"intersections/{street} & {east_avenue}"
+                east_intersection = MAP_CONTENTS / f"intersections/{street} & {east_avenue}"
                 create_symlink(block, east_intersection / f"⏴ west to {st_number} {street}")
                 create_symlink(east_intersection, block / f"⏵ east to {street} & {east_avenue}")
 
             if index > 0:
                 west_avenue = AVENUE_NAMES[index - 1]
-                west_intersection = CITY_PATH / f"intersections/{street} & {west_avenue}"
+                west_intersection = MAP_CONTENTS / f"intersections/{street} & {west_avenue}"
                 create_symlink(block, west_intersection / f"⏵ east to {st_number} {street}")
                 create_symlink(west_intersection, block / f"⏴ west to {street} & {west_avenue}")
 
     for avenue in AVENUE_NAMES:
-        avenue_path = CITY_PATH / f"verticals/{avenue} blocks"
+        avenue_path = MAP_CONTENTS / f"verticals/{avenue} blocks"
 
         for index, av_number in enumerate(AVENUE_NUMBERS):
             block = avenue_path / f"{av_number} {avenue}"
 
             if index < len(STREET_NAMES):
                 south_street = STREET_NAMES[index]
-                south_intersection = CITY_PATH / f"intersections/{south_street} & {avenue}"
+                south_intersection = MAP_CONTENTS / f"intersections/{south_street} & {avenue}"
                 create_symlink(block, south_intersection / f"⏶ north to {av_number} {avenue}")
                 create_symlink(south_intersection, block / f"⏷ south to {south_street} & {avenue}")
 
             if index > 0:
                 north_street = STREET_NAMES[index - 1]
-                north_intersection = CITY_PATH / f"intersections/{north_street} & {avenue}"
+                north_intersection = MAP_CONTENTS / f"intersections/{north_street} & {avenue}"
                 create_symlink(block, north_intersection / f"⏷ south to {av_number} {avenue}")
                 create_symlink(north_intersection, block / f"⏶ north to {north_street} & {avenue}")
 
@@ -204,7 +204,7 @@ def setup_additional_locations():
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
     welcome_center = BASE_PATH / "the welcome center"
-    block_location = CITY_PATH / "horizontals/Juniper St blocks/1900-1999 Juniper St"
+    block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/1900-1999 Juniper St"
 
     # Create symbolic links
     create_symlink(welcome_center, block_location / "1995 Juniper St - the welcome center")
@@ -218,7 +218,7 @@ def setup_welcome_center():
 
 def setup_library():
     """Create the library building."""
-    block_location = CITY_PATH / "horizontals/Juniper St blocks/2000-2099 Juniper St"
+    block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/2000-2099 Juniper St"
     library_path = block_location / "2025 Juniper St - the library"
     create_empty_file(library_path / "[ the juniper st library ]")
     create_symlink(block_location, library_path / "front door")
