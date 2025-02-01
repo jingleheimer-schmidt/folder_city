@@ -155,7 +155,7 @@ def setup_additional_locations():
     create_empty_file(OG_PATH / "the welcome center/go to the kitchen/stove/large pot/potato stew?")
 
     # Kitchen utensils
-    clean_chance = 0.70
+    clean_chance = 1
     for i in range(12, 21):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
