@@ -23,13 +23,9 @@ AVENUE_NUMBERS = [
     "500-599", "600-699", "700-799"
 ]
 
-# Get the current working directory
-BASE_PATH = Path(os.getcwd())
-
 # Define key locations
-BASEMENT = BASE_PATH / "the welcome center/basement"
-APPLICATION_SUPPORT = BASEMENT / "unmarked box/old usb flash drive/users/home/library/application support"
-MAP_CONTENTS = APPLICATION_SUPPORT / "folder city alpha/map contents"
+BASE_PATH = Path(os.getcwd())
+MAP_CONTENTS = BASE_PATH / "the welcome center/basement/unmarked box/flash drive/users/home/library/application support/folder city/map contents"
 
 def create_directory(path):
     """Create a directory if it doesn't already exist."""
@@ -108,20 +104,35 @@ def setup_navigation():
                 create_symlink(block, north_intersection / f"⏷ south to {av_number} {avenue}")
                 create_symlink(north_intersection, block / f"⏶ north to {north_street} & {avenue}")
 
-def setup_additional_locations():
-    """Create additional structures like the welcome center, filing cabinets, and a home directory."""
+def setup_welcome_center():
+    """Link the welcome center to different locations in the folder city."""
+    welcome_center = BASE_PATH / "the welcome center"
+    block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/1900-1999 Juniper St"
+    basement = welcome_center / "basement"
+    home_folder = basement / "unmarked box/flash drive/users/home"
+
+    # Create symbolic links
+    create_symlink(welcome_center, block_location / "1995 Juniper St - the welcome center")
+    create_symlink(block_location, welcome_center / "front door")
+
+    # Create a marker file
+    create_empty_file(welcome_center / "[ the welcome center ]")
+
     # Home structure
     home_dirs = ["movies", "music", "pictures", "public", "downloads", "applications/folder city"]
     for directory in home_dirs:
-        create_directory(BASEMENT / f"unmarked box/old usb flash drive/users/home/{directory}")
+        create_directory(basement / f"unmarked box/flash drive/users/home/{directory}")
+
+    app_folder_symlink = home_folder / "applications/folder city/the welcome center"
+    create_symlink(welcome_center, app_folder_symlink)
 
     # Filing cabinet
     filing_drawers = ["top drawer", "middle drawer", "bottom drawer"]
     for drawer in filing_drawers:
-        create_directory(BASEMENT / f"filing cabinet/{drawer}")
+        create_directory(basement / f"filing cabinet/{drawer}")
 
     # Paperclip box
-    paperclip_box = BASEMENT / "unmarked box/box of paperclips"
+    paperclip_box = basement / "unmarked box/box of paperclips"
     create_directory(paperclip_box)
     for i in range(1, 251):
         create_empty_file(paperclip_box / f"paperclip {i}")
@@ -201,21 +212,6 @@ def setup_additional_locations():
         else:
             create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/bowl_00{prefix}{i}")
 
-def setup_welcome_center():
-    """Link the welcome center to different locations in the folder city."""
-    welcome_center = BASE_PATH / "the welcome center"
-    block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/1900-1999 Juniper St"
-
-    # Create symbolic links
-    create_symlink(welcome_center, block_location / "1995 Juniper St - the welcome center")
-    create_symlink(block_location, welcome_center / "front door")
-    
-    app_folder = BASEMENT / "unmarked box/old usb flash drive/users/home/applications/folder city/the welcome center"
-    create_symlink(welcome_center, app_folder)
-
-    # Create a marker file
-    create_empty_file(welcome_center / "[ the welcome center ]")
-
 def setup_library():
     """Create the library building."""
     block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/2000-2099 Juniper St"
@@ -232,6 +228,5 @@ def setup_library():
 # Run setup functions
 setup_streets_and_avenues()
 setup_navigation()
-setup_additional_locations()
 setup_welcome_center()
 setup_library()
