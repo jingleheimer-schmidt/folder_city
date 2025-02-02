@@ -238,9 +238,33 @@ def setup_california_dr_park():
     for object in objects:
         create_empty_file(park_path / object)
 
+def setup_market_ave_deli():
+    """Create the market ave deli"""
+    block_location = MAP_CONTENTS / "verticals/Market Ave blocks/600-699 Market Ave"
+    deli_path = block_location / "662 Market Ave - market deli"
+    create_empty_file(deli_path / "[ market deli ]")
+    create_symlink(block_location, deli_path / "front door")
+    for i in range(15, 30):
+        create_empty_file(deli_path / f"refrigerator/lemonade_00{i}")
+        if random.random() < .25:
+            create_empty_file(deli_path / f"freezer/popsicle_00{i}")
+    for i in range(10, 25):
+        create_empty_file(deli_path / f"refrigerator/iced_coffee_00{i}")
+        if random.random() < .25:
+            create_empty_file(deli_path / f"freezer/popsicle_00{i}")
+    for i in range(1, 18):
+        prefix = "0" if i < 10 else ""
+        create_empty_file(deli_path / f"refrigerator/iced_coffee_00{prefix}{i}")
+        if random.random() < .25:
+            create_empty_file(deli_path / f"freezer/popsicle_00{prefix}{i}")
+    for i in range(1, 100):
+        prefix = "0" if i < 10 else ""
+        create_empty_file(deli_path / f"sandwhich counter/sandwhich_00{i}")
+
 # Run setup functions
 setup_streets_and_avenues()
 setup_navigation()
 setup_welcome_center()
 setup_library()
 setup_california_dr_park()
+setup_market_ave_deli()
