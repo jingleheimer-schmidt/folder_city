@@ -260,6 +260,13 @@ def setup_market_ave_deli():
     for i in range(1, 100):
         prefix = "0" if i < 10 else ""
         create_empty_file(deli_path / f"sandwhich counter/sandwhich_00{i}")
+    for i in range(1, 8):
+        create_empty_file(deli_path / f"chair_0{i}")
+    objects = [
+        "cash register", "muted tv", "table_01", "table_02", 
+    ]
+    for object in objects:
+        create_empty_file(deli_path / object)
 
 # Run setup functions
 setup_streets_and_avenues()
