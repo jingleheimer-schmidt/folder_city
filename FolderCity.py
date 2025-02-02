@@ -225,8 +225,22 @@ def setup_library():
     for book in nonfiction_books:
         create_empty_file(library_path / f"nonfiction/{book}")
 
+def setup_california_dr_park():
+    """Create the California Dr park."""
+    block_location = MAP_CONTENTS / "verticals/California Dr blocks/300-399 California Dr"
+    park_path = block_location / "301 California Dr - california drive park"
+    create_empty_file(park_path / "[ california drive park ]")
+    create_symlink(block_location, park_path / "sidewalk")
+    locations = [ "public bathroom", "park bench dedicated to gideon" ]
+    objects = [ "tree_07", "tree_04", "tree_11", "shrub_22", "shrub 31", "tree_01", "postcard" ]
+    for location in locations:
+        create_directory(park_path / location)
+    for object in objects:
+        create_empty_file(park_path / object)
+
 # Run setup functions
 setup_streets_and_avenues()
 setup_navigation()
 setup_welcome_center()
 setup_library()
+setup_california_dr_park()
