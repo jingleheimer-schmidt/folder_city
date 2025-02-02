@@ -259,7 +259,7 @@ def setup_market_ave_deli():
             create_empty_file(deli_path / f"freezer/popsicle_00{prefix}{i}")
     for i in range(1, 100):
         prefix = "0" if i < 10 else ""
-        create_empty_file(deli_path / f"sandwhich counter/sandwhich_00{i}")
+        create_empty_file(deli_path / f"sandwhich counter/sandwhich_00{prefix}{i}")
     for i in range(1, 8):
         create_empty_file(deli_path / f"chair_0{i}")
     objects = [
