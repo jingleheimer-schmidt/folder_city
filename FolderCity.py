@@ -232,7 +232,7 @@ def setup_california_dr_park():
     create_empty_file(park_path / "[ california drive park ]")
     create_symlink(block_location, park_path / "sidewalk")
     locations = [ "public bathroom", "trashcan" ]
-    objects = [ "tree_07", "tree_04", "tree_11", "shrub_22", "shrub 31", "tree_01", "postcard", "trashcan/compostable plastic utensils", "trashcan/dirty paper plates", "trashcan/garbage", "park bench dedicated to gideon", "park bench dedicated to the ghosts" ]
+    objects = [ "tree_07", "tree_04", "tree_11", "shrub_22", "shrub_31", "tree_01", "postcard", "trashcan/compostable plastic utensils", "trashcan/dirty paper plates", "trashcan/garbage", "park bench dedicated to gideon", "park bench dedicated to the ghosts" ]
     for location in locations:
         create_directory(park_path / location)
     for object in objects:
