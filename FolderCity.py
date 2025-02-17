@@ -244,31 +244,26 @@ def setup_market_ave_deli():
     deli_path = block_location / "662 Market Ave - market deli"
     create_empty_file(deli_path / "[ market deli ]")
     create_symlink(block_location, deli_path / "front door")
-    for i in range(15, 30):
-        create_empty_file(deli_path / f"refrigerator/lemonade_00{i}")
-        if random.random() < .25:
-            create_empty_file(deli_path / f"freezer/popsicle_00{i}")
-    for i in range(10, 25):
-        create_empty_file(deli_path / f"refrigerator/iced_coffee_00{i}")
-        if random.random() < .25:
-            create_empty_file(deli_path / f"freezer/popsicle_00{i}")
-    for i in range(1, 18):
-        prefix = "0" if i < 10 else ""
-        create_empty_file(deli_path / f"refrigerator/iced_coffee_00{prefix}{i}")
-        if random.random() < .25:
-            create_empty_file(deli_path / f"freezer/popsicle_00{prefix}{i}")
-            if random.random() < .25:
-                create_empty_file(deli_path / f"garbage can/popsicle_stick_00{prefix}{i}")
-    for i in range(1, 100):
-        prefix = "0" if i < 10 else ""
-        create_empty_file(deli_path / f"sandwhich counter/sandwhich_00{prefix}{i}")
-    for i in range(1, 8):
-        create_empty_file(deli_path / f"chair_0{i}")
     objects = [
-        "cash register", "muted tv", "table_01", "table_02", 
+        {"path": "refrigerator/lemonade", "min": 15, "max": 30, "chance": 0.125},
+        {"path": "refrigerator/iced_coffee", "min": 10, "max": 25, "chance": 0.25},
+        {"path": "freezer/popsicle", "min": 10, "max": 25, "chance": 0.25},
+        {"path": "garbage can/popsicle_stick", "min": 1, "max": 100, "chance": 0.03},
+        {"path": "garbage can/empty_cup", "min": 1, "max": 100, "chance": 0.03},
+        {"path": "sandwhich counter/sandwhich", "min": 25, "max": 55, "chance": 0.25},
+        {"path": "chair", "min": 1, "max": 8, "chance": 1.0},
+        {"path": "cash register", "count": 1},
+        {"path": "muted tv", "count": 1},
+        {"path": "table", "count": 2},
     ]
-    for object in objects:
-        create_empty_file(deli_path / object)
+    for obj in objects:
+        min = obj.get("min", 1)
+        max = obj.get("max", obj.get("count", 1))
+        chance = obj.get("chance", 1.0)
+        for i in range(min, max + 1):
+            if random.random() < chance:
+                suffix = f"_{i:03}" if max > 1 else "" # format as three-digit number if more than 5 items total
+                create_empty_file(deli_path / f"{obj['path']}{suffix}")
 
 # Run setup functions
 setup_streets_and_avenues()
