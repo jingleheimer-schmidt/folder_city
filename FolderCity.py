@@ -257,6 +257,8 @@ def setup_market_ave_deli():
         create_empty_file(deli_path / f"refrigerator/iced_coffee_00{prefix}{i}")
         if random.random() < .25:
             create_empty_file(deli_path / f"freezer/popsicle_00{prefix}{i}")
+            if random.random() < .25:
+                create_empty_file(deli_path / f"garbage can/popsicle_stick_00{prefix}{i}")
     for i in range(1, 100):
         prefix = "0" if i < 10 else ""
         create_empty_file(deli_path / f"sandwhich counter/sandwhich_00{prefix}{i}")
