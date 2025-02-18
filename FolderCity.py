@@ -228,12 +228,18 @@ def setup_library():
     library_path = block_location / "2025 Juniper St - the library"
     create_empty_file(library_path / "[ the juniper st library ]")
     create_symlink(block_location, library_path / "front door")
-    fiction_books = [ "a brief history of map quests", "home, again", "deep ocean", "hello ily", "goblin tombs 2" ]
-    nonfiction_books = [ "the second house", "in too deep: the true story of the ultimate unsinkable submarine", "how to identify animal bites", "nobosy knows"]
-    for book in fiction_books:
-        create_empty_file(library_path / f"fiction/{book}")
-    for book in nonfiction_books:
-        create_empty_file(library_path / f"nonfiction/{book}")
+    books = [
+        {"path": "fiction books/a brief history of map quests", "count": 1},
+        {"path": "fiction books/home, again", "count": 1},
+        {"path": "fiction books/deep ocean", "count": 1},
+        {"path": "fiction books/hello ily", "count": 1},
+        {"path": "fiction books/goblin tombs 2", "count": 1},
+        {"path": "nonfiction books/the second house", "count": 1},
+        {"path": "nonfiction books/in too deep: the true story of the ultimate unsinkable submarine", "count": 1},
+        {"path": "nonfiction books/how to identify animal bites", "count": 1},
+        {"path": "nonfiction books/nobosy knows", "count": 1},
+    ]
+    create_objects(library_path, books)
 
 def setup_california_dr_park():
     """Create the California Dr park."""
