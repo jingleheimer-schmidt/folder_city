@@ -52,11 +52,11 @@ def create_directory(path):
     """Create a directory if it doesn't already exist."""
     os.makedirs(path, exist_ok=True)
 
-def create_empty_file(path):
-    """Create an empty file, ensuring the parent directory exists first."""
+def create_file(path: Path, contents: str = ""):
+    """Create a file with optional contents, ensuring the parent directory exists first."""
     path.parent.mkdir(parents=True, exist_ok=True)  # Ensure parent directory exists
     if not path.exists():
-        path.write_text("")
+        path.write_text(contents)
 
 def create_symlink(target, destination):
     """Create a symbolic link to target if it doesn't already exist. Destination is the symlink path and target is the file to link to."""
@@ -72,7 +72,7 @@ def setup_streets_and_avenues():
         for st_number in STREET_NUMBERS:
             block_path = street_path / f"{st_number} {street}"
             create_directory(block_path)
-            create_empty_file(block_path / f"[ {st_number} {street} ]")
+            create_file(block_path / f"[ {st_number} {street} ]")
 
             for avenue in AVENUE_NAMES:
                 avenue_path = MAP_CONTENTS / f"verticals/{avenue} blocks"
@@ -81,11 +81,11 @@ def setup_streets_and_avenues():
                 for av_number in AVENUE_NUMBERS:
                     av_block_path = avenue_path / f"{av_number} {avenue}"
                     create_directory(av_block_path)
-                    create_empty_file(av_block_path / f"[ {av_number} {avenue} ]")
+                    create_file(av_block_path / f"[ {av_number} {avenue} ]")
                     
                     intersection_path = MAP_CONTENTS / f"intersections/{street} & {avenue}"
                     create_directory(intersection_path)
-                    create_empty_file(intersection_path / f"[ {street} & {avenue} ]")
+                    create_file(intersection_path / f"[ {street} & {avenue} ]")
 
 def setup_navigation():
     """Create symbolic links between streets and avenues for navigation."""
@@ -142,10 +142,11 @@ def create_objects(base_path: Path, objects: List[Dict[str, Union[str, int, floa
         min = obj.get("min", 1)
         max = obj.get("max", obj.get("count", 1))
         chance = obj.get("chance", 1.0)
+        contents = obj.get("contents", "")
         for i in range(min, max + 1):
             if random.random() < chance:
                 suffix = f"_{i:03}" if max > 1 else ""  # format as three-digit number if more than 1 item
-                create_empty_file(base_path / f"{obj['path']}{suffix}")
+                create_file(base_path / f"{obj['path']}{suffix}")
 
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
@@ -159,7 +160,7 @@ def setup_welcome_center():
     create_symlink(block_location, welcome_center / "front door")
 
     # Create a marker file
-    create_empty_file(welcome_center / "[ the welcome center ]")
+    create_file(welcome_center / "[ the welcome center ]")
 
     # Home structure
     home_dirs = ["movies", "music", "pictures", "public", "downloads", "applications/folder city"]
@@ -178,7 +179,7 @@ def setup_welcome_center():
     paperclip_box = basement / "unmarked box/box of paperclips"
     create_directory(paperclip_box)
     for i in range(1, 251):
-        create_empty_file(paperclip_box / f"paperclip {i}")
+        create_file(paperclip_box / f"paperclip {i}")
 
     # Upstairs
     upstairs_paths = [
@@ -200,31 +201,31 @@ def setup_welcome_center():
         "kitchen/table",
     ]
     for item in item_paths:
-        create_empty_file(BASE_PATH / f"the welcome center/{item}")
+        create_file(BASE_PATH / f"the welcome center/{item}")
 
-    create_empty_file(BASE_PATH / "the welcome center/kitchen/stove/large pot/ladle")
-    create_empty_file(BASE_PATH / "the welcome center/kitchen/stove/large pot/potato stew?")
+    create_file(BASE_PATH / "the welcome center/kitchen/stove/large pot/ladle")
+    create_file(BASE_PATH / "the welcome center/kitchen/stove/large pot/potato stew?")
 
     # Kitchen utensils
     clean_chance = 1
     for i in range(12, 21):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/forks/fork_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/forks/fork_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/fork_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/fork_00{prefix}{i}")
     for i in range(15, 26):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/spoons/spoon_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/spoon_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/spoon_00{prefix}{i}")
     for i in range(7, 14):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/knives/knife_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/drawer/utensil tray/knives/knife_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/knife_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/knife_00{prefix}{i}")
     shelf_paths = [
         "kitchen/cabinet/top shelf",
         "kitchen/cabinet/middle shelf",
@@ -235,31 +236,31 @@ def setup_welcome_center():
     for i in range(15, 32):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/top shelf/cup_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/top shelf/cup_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/cup_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/cup_00{prefix}{i}")
     for i in range(1, 13):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/middle shelf/large_plate_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/middle shelf/large_plate_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/large_plate_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/large_plate_00{prefix}{i}")
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/middle shelf/small_plate_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/middle shelf/small_plate_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/small_plate_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/small_plate_00{prefix}{i}")
     for i in range(1, 9):
         prefix = "0" if i < 10 else ""
         if random.random() < clean_chance:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/cabinet/bottom shelf/bowl_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/cabinet/bottom shelf/bowl_00{prefix}{i}")
         else:
-            create_empty_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/bowl_00{prefix}{i}")
+            create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/bowl_00{prefix}{i}")
 
 def setup_library():
     """Create the library building."""
     block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/2000-2099 Juniper St"
     library_path = block_location / "2025 Juniper St - the library"
-    create_empty_file(library_path / "[ the juniper st library ]")
+    create_file(library_path / "[ the juniper st library ]")
     create_symlink(block_location, library_path / "front door")
     objects = [
         {"path": "fiction books/a brief history of map quests", "count": 1},
@@ -278,7 +279,7 @@ def setup_california_dr_park():
     """Create the California Dr park."""
     block_location = MAP_CONTENTS / "verticals/California Dr blocks/300-399 California Dr"
     park_path = block_location / "301 California Dr - california drive park"
-    create_empty_file(park_path / "[ california drive park ]")
+    create_file(park_path / "[ california drive park ]")
     create_symlink(block_location, park_path / "sidewalk")
     objects = [
         {"path": "tree", "min": 1, "max": 15, "chance": 0.1},
@@ -299,7 +300,7 @@ def setup_market_ave_deli():
     """Create the market ave deli"""
     block_location = MAP_CONTENTS / "verticals/Market Ave blocks/600-699 Market Ave"
     deli_path = block_location / "662 Market Ave - market deli"
-    create_empty_file(deli_path / "[ market deli ]")
+    create_file(deli_path / "[ market deli ]")
     create_symlink(block_location, deli_path / "front door")
     objects = [
         {"path": "refrigerator/lemonade", "min": 15, "max": 30, "chance": 0.125},
@@ -319,7 +320,7 @@ def setup_rosenberg_botanicals():
     """Create the willow st rosenberg botanicals shop"""
     block_location = MAP_CONTENTS / "horizontals/Willow St blocks/1900-1999 Willow St"
     flowers_path = block_location / "1981 Willow St - rosenberg botanicals"
-    create_empty_file(flowers_path / "[ rosenberg botanicals ]")
+    create_file(flowers_path / "[ rosenberg botanicals ]")
     create_symlink(block_location, flowers_path / "front door")
     objects = [
         {"path": "bouquets/ornate_bouquet", "min": 1, "max": 5, "chance": 0.75},
