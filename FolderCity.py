@@ -241,12 +241,24 @@ def setup_california_dr_park():
     park_path = block_location / "301 California Dr - california drive park"
     create_empty_file(park_path / "[ california drive park ]")
     create_symlink(block_location, park_path / "sidewalk")
-    locations = [ "public bathroom", "trashcan" ]
-    objects = [ "tree_07", "tree_04", "tree_11", "shrub_22", "shrub_31", "tree_01", "postcard", "trashcan/compostable plastic utensils", "trashcan/dirty paper plates", "trashcan/garbage", "park bench dedicated to gideon", "park bench dedicated to the ghosts" ]
+    objects = [
+        {"path": "tree_07", "count": 1},
+        {"path": "tree_04", "count": 1},
+        {"path": "tree_11", "count": 1},
+        {"path": "shrub_22", "count": 1},
+        {"path": "shrub_31", "count": 1},
+        {"path": "tree_01", "count": 1},
+        {"path": "postcard", "count": 1},
+        {"path": "trashcan/compostable plastic utensils", "count": 1},
+        {"path": "trashcan/dirty paper plates", "count": 1},
+        {"path": "trashcan/garbage", "count": 1},
+        {"path": "park bench dedicated to gideon", "count": 1},
+        {"path": "park bench dedicated to the ghosts", "count": 1},
+    ]
+    create_objects(park_path, objects)
+    locations = ["public bathroom", "trashcan"]
     for location in locations:
         create_directory(park_path / location)
-    for object in objects:
-        create_empty_file(park_path / object)
 
 def setup_market_ave_deli():
     """Create the market ave deli"""
