@@ -263,15 +263,19 @@ def setup_library():
     create_file(library_path / "[ the juniper st library ]")
     create_symlink(block_location, library_path / "front door")
     objects = [
-        {"path": "fiction books/a brief history of map quests", "count": 1},
-        {"path": "fiction books/home, again", "count": 1},
-        {"path": "fiction books/deep ocean", "count": 1},
-        {"path": "fiction books/hello ily", "count": 1},
-        {"path": "fiction books/goblin tombs 2", "count": 1},
-        {"path": "nonfiction books/the second house", "count": 1},
-        {"path": "nonfiction books/in too deep: the true story of the ultimate unsinkable submarine", "count": 1},
-        {"path": "nonfiction books/how to identify animal bites", "count": 1},
-        {"path": "nonfiction books/nobosy knows", "count": 1},
+        {"path": "fiction books/a brief history of map quests"},
+        {"path": "fiction books/home, again"},
+        {"path": "fiction books/deep ocean"},
+        {"path": "fiction books/hello ily"},
+        {"path": "fiction books/goblin tomb 2"},
+        {"path": "fiction books/lost in the woods"},
+        {"path": "fiction books/one more time"},
+        {"path": "nonfiction books/the second house"},
+        {"path": "nonfiction books/in too deep- a true story of the ultimate unsinkable submarine"},
+        {"path": "nonfiction books/how to identify animal bites"},
+        {"path": "nonfiction books/nobody knows"},
+        {"path": "nonfiction books/snakes"},
+        {"path": "nonfiction books/what's that sound?"},
     ]
     create_objects(library_path, objects)
 
