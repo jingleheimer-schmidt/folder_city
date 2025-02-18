@@ -1,6 +1,7 @@
 import os
 import random
 from pathlib import Path
+from typing import List, Dict, Union
 
 # Define street and avenue names
 STREET_NAMES = [
@@ -124,7 +125,19 @@ def setup_navigation():
                 create_symlink(block, north_intersection / f"⏷ south to {av_number} {avenue}")
                 create_symlink(north_intersection, block / f"⏶ north to {north_street} & {avenue}")
 
-def create_objects(base_path, objects):
+def create_objects(base_path: Path, objects: List[Dict[str, Union[str, int, float]]]) -> None:
+    """Create objects in the specified base path.
+
+    Args:
+        base_path (Path): The base directory path where files will be created.
+        objects (List[Dict[str, Union[str, int, float]]]): 
+            A list of dictionaries, each containing:
+                - path (str): The path to create the file.
+                - min (int, optional): Minimum number for object naming (ex. obj_001) (default: 1).
+                - max (int, optional): Maximum number for object naming (ex. obj_005) (default: count or 1).
+                - count (int, optional): Fixed number of objects (overrides min/max).
+                - chance (float, optional): Probability (0 to 1) that each object is created (default: 1.0).
+    """
     for obj in objects:
         min = obj.get("min", 1)
         max = obj.get("max", obj.get("count", 1))
