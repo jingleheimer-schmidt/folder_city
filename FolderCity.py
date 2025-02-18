@@ -262,7 +262,7 @@ def setup_market_ave_deli():
         chance = obj.get("chance", 1.0)
         for i in range(min, max + 1):
             if random.random() < chance:
-                suffix = f"_{i:03}" if max > 1 else "" # format as three-digit number if more than 5 items total
+                suffix = f"_{i:03}" if max > 1 else "" # format as three-digit number if more than 1 item
                 create_empty_file(deli_path / f"{obj['path']}{suffix}")
 
 # Run setup functions
