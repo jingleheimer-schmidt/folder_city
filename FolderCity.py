@@ -281,23 +281,19 @@ def setup_california_dr_park():
     create_empty_file(park_path / "[ california drive park ]")
     create_symlink(block_location, park_path / "sidewalk")
     objects = [
-        {"path": "tree_07", "count": 1},
-        {"path": "tree_04", "count": 1},
-        {"path": "tree_11", "count": 1},
-        {"path": "shrub_22", "count": 1},
-        {"path": "shrub_31", "count": 1},
-        {"path": "tree_01", "count": 1},
-        {"path": "postcard", "count": 1},
-        {"path": "trashcan/compostable plastic utensils", "count": 1},
-        {"path": "trashcan/dirty paper plates", "count": 1},
-        {"path": "trashcan/garbage", "count": 1},
-        {"path": "park bench dedicated to gideon", "count": 1},
-        {"path": "park bench dedicated to the ghosts", "count": 1},
+        {"path": "tree", "min": 1, "max": 15, "chance": 0.1},
+        {"path": "shrub", "min": 32, "max": 85, "chance": 0.05},
+        {"path": "postcard"},
+        {"path": "trashcan/compostable plastic utensils"},
+        {"path": "trashcan/paper plates"},
+        {"path": "trashcan/garbage"},
+        {"path": "park bench dedicated to gideon"},
+        {"path": "park bench dedicated to the ghosts"},
+        {"path": "public bathroom/toilet"},
+        {"path": "public bathroom/sink"},
+        {"path": "public bathroom/shattered mirror"},
     ]
     create_objects(park_path, objects)
-    locations = ["public bathroom", "trashcan"]
-    for location in locations:
-        create_directory(park_path / location)
 
 def setup_market_ave_deli():
     """Create the market ave deli"""
