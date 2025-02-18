@@ -58,10 +58,10 @@ def create_empty_file(path):
     if not path.exists():
         path.write_text("")
 
-def create_symlink(target, link_name):
-    """Create a symbolic link if it doesn't already exist."""
-    if not link_name.exists():
-        os.symlink(target, link_name)
+def create_symlink(target, destination):
+    """Create a symbolic link to target if it doesn't already exist. Destination is the symlink path and target is the file to link to."""
+    if not destination.exists():
+        os.symlink(target, destination)
 
 def setup_streets_and_avenues():
     """Create directories for streets, avenues, and their intersections."""
