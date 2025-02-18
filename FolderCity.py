@@ -104,6 +104,16 @@ def setup_navigation():
                 create_symlink(block, north_intersection / f"⏷ south to {av_number} {avenue}")
                 create_symlink(north_intersection, block / f"⏶ north to {north_street} & {avenue}")
 
+def create_objects(base_path, objects):
+    for obj in objects:
+        min = obj.get("min", 1)
+        max = obj.get("max", obj.get("count", 1))
+        chance = obj.get("chance", 1.0)
+        for i in range(min, max + 1):
+            if random.random() < chance:
+                suffix = f"_{i:03}" if max > 1 else ""  # format as three-digit number if more than 1 item
+                create_empty_file(base_path / f"{obj['path']}{suffix}")
+
 def setup_welcome_center():
     """Link the welcome center to different locations in the folder city."""
     welcome_center = BASE_PATH / "the welcome center"
@@ -256,14 +266,7 @@ def setup_market_ave_deli():
         {"path": "muted tv", "count": 1},
         {"path": "table", "count": 2},
     ]
-    for obj in objects:
-        min = obj.get("min", 1)
-        max = obj.get("max", obj.get("count", 1))
-        chance = obj.get("chance", 1.0)
-        for i in range(min, max + 1):
-            if random.random() < chance:
-                suffix = f"_{i:03}" if max > 1 else "" # format as three-digit number if more than 1 item
-                create_empty_file(deli_path / f"{obj['path']}{suffix}")
+    create_objects(deli_path, objects)
 
 # Run setup functions
 setup_streets_and_avenues()
