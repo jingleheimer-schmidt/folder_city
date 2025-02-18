@@ -315,6 +315,32 @@ def setup_market_ave_deli():
     ]
     create_objects(deli_path, objects)
 
+def setup_rosenberg_botanicals():
+    """Create the willow st rosenberg botanicals shop"""
+    block_location = MAP_CONTENTS / "horizontals/Willow St blocks/1900-1999 Willow St"
+    flowers_path = block_location / "1981 Willow St - rosenberg botanicals"
+    create_empty_file(flowers_path / "[ rosenberg botanicals ]")
+    create_symlink(block_location, flowers_path / "front door")
+    objects = [
+        {"path": "bouquets/ornate_bouquet", "min": 1, "max": 5, "chance": 0.75},
+        {"path": "bouquets/simple_bouquet", "min": 3, "max": 10, "chance": 0.75},
+        {"path": "bouquets/assorted_roses", "min": 3, "max": 6, "chance": 0.75},
+        {"path": "bouquets/assorted_tulips", "min": 3, "max": 7, "chance": 0.75},
+        {"path": "potted plants/small_succulent", "min": 5, "max": 15, "chance": 0.5},
+        {"path": "potted plants/snakeplant", "min": 5, "max": 15, "chance": 0.4},
+        {"path": "potted plants/small_fern", "min": 2, "max": 10, "chance": 0.6},
+        {"path": "seed packs/carrot", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "seed packs/parsley", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "seed packs/thyme", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "seed packs/tomato", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "seed packs/beet", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "seed packs/onion", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "seed packs/cucumber", "min": 1, "max": 15, "chance": 0.4},
+        {"path": "storeroom/seed of wonder"},
+        {"path": "cash register"},
+    ]
+    create_objects(flowers_path, objects)
+
 # Run setup functions
 setup_streets_and_avenues()
 setup_navigation()
@@ -322,3 +348,4 @@ setup_welcome_center()
 setup_library()
 setup_california_dr_park()
 setup_market_ave_deli()
+setup_rosenberg_botanicals()
