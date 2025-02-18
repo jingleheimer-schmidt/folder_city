@@ -4,23 +4,43 @@ from pathlib import Path
 
 # Define street and avenue names
 STREET_NAMES = [
-    "Birch St", "Chestnut St", "Oak St", "Juniper St",
-    "Pine St", "Maple St", "Willow St"
+    "Birch St",
+    "Chestnut St",
+    "Oak St",
+    "Juniper St",
+    "Pine St",
+    "Maple St",
+    "Willow St",
 ]
 
 AVENUE_NAMES = [
-    "Ocean Ave", "California Dr", "Mission Ave", "Hollow Dr",
-    "Sunset Ln", "Broad Way", "Market Ave"
+    "Ocean Ave",
+    "California Dr",
+    "Mission Ave",
+    "Hollow Dr",
+    "Sunset Ln",
+    "Broad Way",
+    "Market Ave",
 ]
 
 STREET_NUMBERS = [
-    "1600-1699", "1700-1799", "1800-1899", "1900-1999",
-    "2000-2099", "2100-2199", "2200-2299"
+    "1600-1699",
+    "1700-1799",
+    "1800-1899",
+    "1900-1999",
+    "2000-2099",
+    "2100-2199",
+    "2200-2299",
 ]
 
 AVENUE_NUMBERS = [
-    "100-199", "200-299", "300-399", "400-499",
-    "500-599", "600-699", "700-799"
+    "100-199",
+    "200-299",
+    "300-399",
+    "400-499",
+    "500-599",
+    "600-699",
+    "700-799",
 ]
 
 # Define key locations
