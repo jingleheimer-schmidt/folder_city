@@ -256,101 +256,103 @@ def setup_welcome_center():
         else:
             create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/bowl_00{prefix}{i}")
 
-def setup_library():
-    """Create the library building."""
-    block_location = MAP_CONTENTS / "horizontals/Juniper St blocks/2000-2099 Juniper St"
-    library_path = block_location / "2025 Juniper St - the library"
-    create_file(library_path / "[ the juniper st library ]")
-    create_symlink(block_location, library_path / "front door")
-    objects = [
-        {"path": "fiction books/a brief history of map quests"},
-        {"path": "fiction books/home, again"},
-        {"path": "fiction books/deep ocean"},
-        {"path": "fiction books/hello ily"},
-        {"path": "fiction books/goblin tomb 2"},
-        {"path": "fiction books/lost in the woods"},
-        {"path": "fiction books/one more time"},
-        {"path": "nonfiction books/the second house"},
-        {"path": "nonfiction books/in too deep- a true story of the ultimate unsinkable submarine"},
-        {"path": "nonfiction books/how to identify animal bites"},
-        {"path": "nonfiction books/nobody knows"},
-        {"path": "nonfiction books/snakes"},
-        {"path": "nonfiction books/what's that sound?"},
-    ]
-    create_objects(library_path, objects)
+LOCATIONS = [
+    {
+        "name": "the library",
+        "block_location": "horizontals/Juniper St blocks/2000-2099 Juniper St",
+        "address": "2025 Juniper St - the library",
+        "exit_name": "front door",
+        "marker": "[ the library ]",
+        "objects": [
+            {"path": "fiction books/a brief history of map quests"},
+            {"path": "fiction books/home, again"},
+            {"path": "fiction books/deep ocean"},
+            {"path": "fiction books/hello ily"},
+            {"path": "fiction books/goblin tomb 2"},
+            {"path": "fiction books/lost in the woods"},
+            {"path": "fiction books/one more time"},
+            {"path": "nonfiction books/the second house"},
+            {"path": "nonfiction books/in too deep- a true story of the ultimate unsinkable submarine"},
+            {"path": "nonfiction books/how to identify animal bites"},
+            {"path": "nonfiction books/nobody knows"},
+            {"path": "nonfiction books/snakes"},
+            {"path": "nonfiction books/what's that sound?"},
+        ]
+    },
+    {
+        "name": "california drive park",
+        "block_location": "verticals/California Dr blocks/300-399 California Dr",
+        "address": "301 California Dr - california drive park",
+        "exit_name": "sidewalk",
+        "marker": "[ california drive park ]",
+        "objects": [
+            {"path": "tree", "min": 1, "max": 15, "chance": 0.1},
+            {"path": "shrub", "min": 32, "max": 85, "chance": 0.05},
+            {"path": "postcard"},
+            {"path": "trashcan/compostable plastic utensils"},
+            {"path": "trashcan/paper plates"},
+            {"path": "trashcan/garbage"},
+            {"path": "park bench dedicated to gideon"},
+            {"path": "park bench dedicated to the ghosts"},
+            {"path": "public bathroom/toilet"},
+            {"path": "public bathroom/sink"},
+            {"path": "public bathroom/shattered mirror"},
+        ]
+    },
+    {
+        "name": "market deli",
+        "block_location": "verticals/Market Ave blocks/600-699 Market Ave",
+        "address": "662 Market Ave - market deli",
+        "exit_name": "front door",
+        "marker": "[ market deli ]",
+        "objects": [
+            {"path": "refrigerator/lemonade", "min": 15, "max": 30, "chance": 0.125},
+            {"path": "refrigerator/iced_coffee", "min": 10, "max": 25, "chance": 0.25},
+            {"path": "freezer/popsicle", "min": 10, "max": 25, "chance": 0.25},
+            {"path": "garbage can/popsicle_stick", "min": 1, "max": 100, "chance": 0.03},
+            {"path": "garbage can/empty_cup", "min": 1, "max": 100, "chance": 0.03},
+            {"path": "sandwhich counter/sandwhich", "min": 25, "max": 55, "chance": 0.25},
+            {"path": "chair", "min": 1, "max": 8, "chance": 1.0},
+            {"path": "cash register", "count": 1},
+            {"path": "muted tv", "count": 1},
+            {"path": "table", "count": 2},
+        ]
+    },
+    {
+        "name": "rosenberg botanicals",
+        "block_location": "horizontals/Willow St blocks/1900-1999 Willow St",
+        "address": "1981 Willow St - rosenberg botanicals",
+        "exit_name": "front door",
+        "marker": "[ rosenberg botanicals ]",
+        "objects": [
+            {"path": "bouquets/ornate_bouquet", "min": 1, "max": 5, "chance": 0.75},
+            {"path": "bouquets/simple_bouquet", "min": 3, "max": 10, "chance": 0.75},
+            {"path": "bouquets/assorted_roses", "min": 3, "max": 6, "chance": 0.75},
+            {"path": "bouquets/assorted_tulips", "min": 3, "max": 7, "chance": 0.75},
+            {"path": "potted plants/small_succulent", "min": 5, "max": 15, "chance": 0.5},
+            {"path": "potted plants/snakeplant", "min": 5, "max": 15, "chance": 0.4},
+            {"path": "potted plants/small_fern", "min": 2, "max": 10, "chance": 0.6},
+            {"path": "seed packs/carrot seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "seed packs/parsley seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "seed packs/thyme seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "seed packs/tomato seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "seed packs/beet seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "seed packs/onion seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "seed packs/cucumber seeds", "min": 1, "max": 15, "chance": 0.4},
+            {"path": "storeroom/seed of wonder"},
+            {"path": "cash register"},
+        ],
+    },
+]
 
-def setup_california_dr_park():
-    """Create the California Dr park."""
-    block_location = MAP_CONTENTS / "verticals/California Dr blocks/300-399 California Dr"
-    park_path = block_location / "301 California Dr - california drive park"
-    create_file(park_path / "[ california drive park ]")
-    create_symlink(block_location, park_path / "sidewalk")
-    objects = [
-        {"path": "tree", "min": 1, "max": 15, "chance": 0.1},
-        {"path": "shrub", "min": 32, "max": 85, "chance": 0.05},
-        {"path": "postcard"},
-        {"path": "trashcan/compostable plastic utensils"},
-        {"path": "trashcan/paper plates"},
-        {"path": "trashcan/garbage"},
-        {"path": "park bench dedicated to gideon"},
-        {"path": "park bench dedicated to the ghosts"},
-        {"path": "public bathroom/toilet"},
-        {"path": "public bathroom/sink"},
-        {"path": "public bathroom/shattered mirror"},
-    ]
-    create_objects(park_path, objects)
-
-def setup_market_ave_deli():
-    """Create the market ave deli"""
-    block_location = MAP_CONTENTS / "verticals/Market Ave blocks/600-699 Market Ave"
-    deli_path = block_location / "662 Market Ave - market deli"
-    create_file(deli_path / "[ market deli ]")
-    create_symlink(block_location, deli_path / "front door")
-    objects = [
-        {"path": "refrigerator/lemonade", "min": 15, "max": 30, "chance": 0.125},
-        {"path": "refrigerator/iced_coffee", "min": 10, "max": 25, "chance": 0.25},
-        {"path": "freezer/popsicle", "min": 10, "max": 25, "chance": 0.25},
-        {"path": "garbage can/popsicle_stick", "min": 1, "max": 100, "chance": 0.03},
-        {"path": "garbage can/empty_cup", "min": 1, "max": 100, "chance": 0.03},
-        {"path": "sandwhich counter/sandwhich", "min": 25, "max": 55, "chance": 0.25},
-        {"path": "chair", "min": 1, "max": 8, "chance": 1.0},
-        {"path": "cash register", "count": 1},
-        {"path": "muted tv", "count": 1},
-        {"path": "table", "count": 2},
-    ]
-    create_objects(deli_path, objects)
-
-def setup_rosenberg_botanicals():
-    """Create the willow st rosenberg botanicals shop"""
-    block_location = MAP_CONTENTS / "horizontals/Willow St blocks/1900-1999 Willow St"
-    flowers_path = block_location / "1981 Willow St - rosenberg botanicals"
-    create_file(flowers_path / "[ rosenberg botanicals ]")
-    create_symlink(block_location, flowers_path / "front door")
-    objects = [
-        {"path": "bouquets/ornate_bouquet", "min": 1, "max": 5, "chance": 0.75},
-        {"path": "bouquets/simple_bouquet", "min": 3, "max": 10, "chance": 0.75},
-        {"path": "bouquets/assorted_roses", "min": 3, "max": 6, "chance": 0.75},
-        {"path": "bouquets/assorted_tulips", "min": 3, "max": 7, "chance": 0.75},
-        {"path": "potted plants/small_succulent", "min": 5, "max": 15, "chance": 0.5},
-        {"path": "potted plants/snakeplant", "min": 5, "max": 15, "chance": 0.4},
-        {"path": "potted plants/small_fern", "min": 2, "max": 10, "chance": 0.6},
-        {"path": "seed packs/carrot seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "seed packs/parsley seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "seed packs/thyme seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "seed packs/tomato seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "seed packs/beet seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "seed packs/onion seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "seed packs/cucumber seeds", "min": 1, "max": 15, "chance": 0.4},
-        {"path": "storeroom/seed of wonder"},
-        {"path": "cash register"},
-    ]
-    create_objects(flowers_path, objects)
+for location in LOCATIONS:
+    sidewalk = MAP_CONTENTS / location["block_location"]
+    building = MAP_CONTENTS / location["block_location"] / location["address"]
+    create_file(building / location["marker"])
+    create_symlink(sidewalk, building / location["exit_name"])
+    create_objects(building, location["objects"])
 
 # Run setup functions
 setup_streets_and_avenues()
 setup_navigation()
 setup_welcome_center()
-setup_library()
-setup_california_dr_park()
-setup_market_ave_deli()
-setup_rosenberg_botanicals()
