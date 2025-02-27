@@ -378,6 +378,22 @@ LOCATIONS = [
             {"path": "balcony/viewfinder (out of order)"},
         ],
     },
+    {
+        "name": "underground bunker",
+        "block_location": "horizontals/Chestnut St blocks/2100-2199 Chestnut St",
+        "address": "2150 Chestnut St - underground bunker",
+        "exit_name": "steel door",
+        "marker": "[ underground bunker ]",
+        "objects": [
+            {"path": "control room/flickering light"},
+            {"path": "radio equipment/static hum"},
+            {"path": "food storage/canned_beans", "min": 10, "max": 30, "chance": 0.7},
+            {"path": "sleeping quarters/bunk bed"},
+            {"path": "abandoned diary"},
+            {"path": "generator (low power)"},
+            {"path": "emergency exit (sealed shut)"},
+        ],
+    },
 ]
 
 # Run setup functions
