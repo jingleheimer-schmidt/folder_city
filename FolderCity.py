@@ -361,6 +361,23 @@ LOCATIONS = [
             {"path": "gift shop/postcard of a comet"},
         ],
     },
+    {
+        "name": "rooftop café",
+        "block_location": "verticals/Sunset Ln blocks/300-399 Sunset Ln",
+        "address": "350 Sunset Ln - rooftop café",
+        "exit_name": "exit stairwell",
+        "marker": "[ rooftop café ]",
+        "objects": [
+            {"path": "barista counter/espresso machine"},
+            {"path": "table/croissant"},
+            {"path": "table/cup of coffee (half empty)"},
+            {"path": "shelf/poetry book"},
+            {"path": "lost and found/scarf"},
+            {"path": "patio/telescope"},
+            {"path": "patio/table for two"},
+            {"path": "balcony/viewfinder (out of order)"},
+        ],
+    },
 ]
 
 # Run setup functions
