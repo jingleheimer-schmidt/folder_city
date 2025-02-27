@@ -345,14 +345,14 @@ LOCATIONS = [
     },
 ]
 
+# Run setup functions
+setup_streets_and_avenues()
+setup_navigation()
+setup_welcome_center()
+
 for location in LOCATIONS:
     sidewalk = MAP_CONTENTS / location["block_location"]
     building = MAP_CONTENTS / location["block_location"] / location["address"]
     create_file(building / location["marker"])
     create_symlink(sidewalk, building / location["exit_name"])
     create_objects(building, location["objects"])
-
-# Run setup functions
-setup_streets_and_avenues()
-setup_navigation()
-setup_welcome_center()
