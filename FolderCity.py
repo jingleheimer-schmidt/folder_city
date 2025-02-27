@@ -343,6 +343,24 @@ LOCATIONS = [
             {"path": "cash register"},
         ],
     },
+    {
+        "name": "the observatory",
+        "block_location": "horizontals/Oak St blocks/2200-2299 Oak St",
+        "address": "2222 Oak St - the observatory",
+        "exit_name": "front gate",
+        "marker": "[ the observatory ]",
+        "objects": [
+            {"path": "telescope"},
+            {"path": "research papers/black hole theories"},
+            {"path": "research papers/astronomical charts"},
+            {"path": "control room/switchboard"},
+            {"path": "control room/old radio transmitter"},
+            {"path": "storage room/spare telescope lens"},
+            {"path": "notepad with cryptic star coordinates"},
+            {"path": "gift shop/souvenir moon rock"},
+            {"path": "gift shop/postcard of a comet"},
+        ],
+    },
 ]
 
 # Run setup functions
