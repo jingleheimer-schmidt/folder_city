@@ -1,5 +1,6 @@
 import os
 import random
+import shutil
 from pathlib import Path
 from typing import List, Dict, Union
 
@@ -47,6 +48,12 @@ AVENUE_NUMBERS = [
 # Define key locations
 BASE_PATH = Path(os.getcwd())
 MAP_CONTENTS = BASE_PATH / "the welcome center/basement/unmarked box/flash drive/users/home/library/application support/folder city/map contents"
+
+def reset_map_contents():
+    """Delete the welcome center folder if it already exists"""
+    welcome_center = BASE_PATH / "the welcome center"
+    if welcome_center.exists():
+        shutil.rmtree(welcome_center)
 
 def create_directory(path):
     """Create a directory if it doesn't already exist."""
@@ -397,6 +404,7 @@ LOCATIONS = [
 ]
 
 # Run setup functions
+reset_map_contents()
 setup_streets_and_avenues()
 setup_navigation()
 setup_welcome_center()
