@@ -385,6 +385,7 @@ LOCATIONS = [
             {"path": "patio/telescope"},
             {"path": "patio/table for two"},
             {"path": "balcony/viewfinder (out of order)"},
+            {"path": "balcony/viewfinder"},
         ],
     },
     {
