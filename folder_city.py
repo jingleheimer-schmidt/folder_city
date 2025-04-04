@@ -2,6 +2,11 @@ import os
 import sys
 import random
 import shutil
+import platform
+import subprocess
+import pyfiglet
+import time
+from tqdm import tqdm
 from pathlib import Path
 from typing import List, Dict, Union
 from locations import LOCATIONS
@@ -271,17 +276,62 @@ def setup_welcome_center():
         else:
             create_file(BASE_PATH / f"the welcome center/kitchen/dishwasher/bowl_00{prefix}{i}")
 
-# Run setup functions
-reset_map_contents()
-setup_streets_and_avenues()
-setup_navigation()
-setup_welcome_center()
+def create_locations():
+    for location in LOCATIONS:
+        sidewalk = MAP_CONTENTS / location["block_location"]
+        building = MAP_CONTENTS / location["block_location"] / location["address"]
+        create_file(building / location["marker"])
+        create_symlink(sidewalk, building / location["exit_name"])
+        create_objects(building, location["objects"])
 
-for location in LOCATIONS:
-    sidewalk = MAP_CONTENTS / location["block_location"]
-    building = MAP_CONTENTS / location["block_location"] / location["address"]
-    create_file(building / location["marker"])
-    create_symlink(sidewalk, building / location["exit_name"])
-    create_objects(building, location["objects"])
+def open_welcome_center():
+    welcome_center_path = BASE_PATH / 'the welcome center'
+    if platform.system() == 'Windows':
+        os.startfile(str(welcome_center_path))
+    elif platform.system() == 'Darwin':  # macOS
+        subprocess.Popen(['open', str(welcome_center_path)])
+    else:  # Linux and others
+        subprocess.Popen(['xdg-open', str(welcome_center_path)])
 
-draw_map(BASE_PATH, LOCATIONS, STREET_NAMES, AVENUE_NAMES, STREET_NUMBERS, AVENUE_NUMBERS)
+
+# only run when executed, not while importing
+if __name__ == "__main__":
+
+    banner = pyfiglet.figlet_format(text="Folder City", font="cricket")
+    print(banner, flush=True)
+
+    def show_progress_bar(description, length):
+        with tqdm(total=length, desc=description, bar_format="{l_bar}{bar:50}", ascii=True) as pbar:
+            for i in range(length):
+                time.sleep(0.02)
+                pbar.update(1)
+
+    # Run setup functions
+    show_progress_bar("Initializing", random.randint(25, 75))
+    # reset_map_contents()
+
+    show_progress_bar("Paving the roads", random.randint(25, 75))
+    setup_streets_and_avenues()
+
+    show_progress_bar("Setting up navigation", random.randint(25, 75))
+    setup_navigation()
+
+    show_progress_bar("Designing up the Welcome Center", random.randint(25, 75))
+    setup_welcome_center()
+
+    show_progress_bar("Constructing buildings", random.randint(25, 75))
+    create_locations()
+
+    show_progress_bar("Drawing the map", random.randint(25, 75))
+    draw_map(BASE_PATH, LOCATIONS, STREET_NAMES, AVENUE_NAMES, STREET_NUMBERS, AVENUE_NUMBERS)
+
+    # Open the welcome center folder
+    # open_welcome_center()
+
+    print("\a", flush=True)  # This sends the ASCII bell character, which may beep in some terminals
+
+    # Exit the program.
+    # Note: If this executable was built with the --windowed flag (on Windows or macOS),
+    # no terminal window will appear at all. For command-line launched executables, the terminal
+    # might stay open unless it was opened solely to run the app.
+    sys.exit()
