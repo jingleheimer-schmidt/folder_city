@@ -426,7 +426,8 @@ import matplotlib.pyplot as plt
 # --- Helper Functions ---
 def parse_address(address):
     """
-    Returns (number, road), e.g. "2025 Juniper St - the library" -> (2025, "Juniper St")
+    Returns (number, road) from an address string.
+    e.g. "2222 Oak St - the observatory" -> (2222, "Oak St")
     """
     main_part = address.split(" - ")[0]
     parts = main_part.split()
@@ -451,46 +452,45 @@ def get_block_index(num, block_ranges):
     return None, None, None
 
 # --- Create the Plot ---
+# Use a light background for a softer look.
 fig, ax = plt.subplots(figsize=(8, 8))
+ax.set_facecolor('#f9f9f9')
 
-# 1) Draw grid lines only for the named streets/avenues (0..6), skipping any 8th line.
-#    That way, there's no outer line if there's no 8th street or avenue name.
+# Draw grid lines only for the named streets (y=0..6) and avenues (x=0..6).
+# Use a dotted, semi-transparent line style.
+for i in range(len(STREET_NAMES)):  # y = 0 .. 6
+    ax.axhline(y=i, color='gray', linestyle=':', linewidth=0.8, alpha=0.7)
+for i in range(len(AVENUE_NAMES)):   # x = 0 .. 6
+    ax.axvline(x=i, color='gray', linestyle=':', linewidth=0.8, alpha=0.7)
 
-# Horizontal lines for streets (y=0..6)
-for i in range(len(STREET_NAMES)):  # i = 0..6
-    ax.axhline(y=i, color='gray', linestyle='--', linewidth=0.8)
-
-# Vertical lines for avenues (x=0..6)
-for i in range(len(AVENUE_NAMES)):  # i = 0..6
-    ax.axvline(x=i, color='gray', linestyle='--', linewidth=0.8)
-
-# Mark intersections with small squares, for i=0..6, j=0..6
+# Mark intersections with small, light gray squares.
 for i in range(len(AVENUE_NAMES)):
     for j in range(len(STREET_NAMES)):
-        ax.plot(i, j, 'ks', markersize=4)
+        ax.plot(i, j, 's', color='lightgray', markersize=4, alpha=0.6)
 
-# 2) Plot each location with offset if it’s on a street vs. avenue
+# Plot each location.
 for loc in LOCATIONS:
     num, road = parse_address(loc["address"])
     if num is None or road is None:
         continue
-    label = f"{loc['name']}\n{loc['address']}"
+    label = f"{loc['name']}\n{num} {road}"
 
-    # If the road is a recognized street
+    # For horizontal (street) addresses:
     if road in STREET_NAMES:
         street_idx = STREET_NAMES.index(road)
         block_idx, low, high = get_block_index(num, STREET_NUMBERS)
         if block_idx is None:
             continue
-        # Adjust the block index to place the building between intersections
+        # Adjust the block index so that a block like "2000-2099" (index 4) appears between avenue 3 and 4.
         adjusted_block_idx = block_idx - 1 if block_idx > 0 else block_idx
         rel_x = (num - low) / (high - low)
         x = adjusted_block_idx + rel_x
-        y = street_idx
+        y = street_idx  # exactly on the street line
         ax.plot(x, y, 'o', color='tab:blue', markersize=8)
-        ax.text(x, y, label, ha='center', va='bottom', fontsize=8)
-
-    # If the road is a recognized avenue
+        # Slight offset for readability:
+        ax.text(x + 0.05, y - 0.05, label, fontsize=8, color='black')
+    
+    # For vertical (avenue) addresses:
     elif road in AVENUE_NAMES:
         avenue_idx = AVENUE_NAMES.index(road)
         block_idx, low, high = get_block_index(num, AVENUE_NUMBERS)
@@ -498,28 +498,28 @@ for loc in LOCATIONS:
             continue
         adjusted_block_idx = block_idx - 1 if block_idx > 0 else block_idx
         rel_y = (num - low) / (high - low)
-        x = avenue_idx
+        x = avenue_idx  # exactly on the avenue line
         y = adjusted_block_idx + rel_y
         ax.plot(x, y, 'o', color='tab:orange', markersize=8)
-        ax.text(x, y, label, ha='center', va='bottom', fontsize=8)
+        ax.text(x + 0.05, y - 0.05, label, fontsize=8, color='black')
 
-# 3) Remove the outer bounding box (the “black border”)
+# Remove the outer bounding box (all spines).
 for spine in ax.spines.values():
     spine.set_visible(False)
 
-# 4) Set the axes to a neat range, with a bit of padding
-ax.set_xlim(-0.2, len(AVENUE_NAMES) - 1 + 0.2)  # e.g. -0.2..6.2
-ax.set_ylim(-0.2, len(STREET_NAMES) - 1 + 0.2) # e.g. -0.2..6.2
+# Set neat axes limits with a bit of padding.
+ax.set_xlim(-0.2, len(AVENUE_NAMES) - 1 + 0.2)
+ax.set_ylim(-0.2, len(STREET_NAMES) - 1 + 0.2)
 
-# 5) Label axes with the named avenues (x-axis) and streets (y-axis)
+# Label axes with the avenue names (x-axis) and street names (y-axis).
 ax.set_xticks(range(len(AVENUE_NAMES)))
 ax.set_xticklabels(AVENUE_NAMES, rotation=45, ha='right')
 ax.set_yticks(range(len(STREET_NAMES)))
 ax.set_yticklabels(STREET_NAMES)
 
-# Optionally invert y so the first street is at the top
+# Optionally invert the y-axis so the first street is at the top.
 ax.invert_yaxis()
 
-ax.set_title("Folder City Map — Cleaned Up & Prettier")
+ax.set_title("Folder City Map", fontsize=12)
 plt.tight_layout()
 plt.show()
