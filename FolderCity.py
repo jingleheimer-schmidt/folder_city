@@ -364,8 +364,10 @@ LOCATIONS = [
             {"path": "control room/old radio transmitter"},
             {"path": "storage room/spare telescope lens"},
             {"path": "notepad with cryptic star coordinates"},
-            {"path": "gift shop/souvenir moon rock"},
-            {"path": "gift shop/postcard of a comet"},
+            {"path": "gift shop/souvenir moon rock", "min": 1, "max": 5, "chance": 0.5},
+            {"path": "gift shop/comet postcard", "min": 1, "max": 10, "chance": 0.6},
+            {"path": "gift shop/moon phase postcard", "min": 1, "max": 10, "chance": 0.6},
+            {"path": "gift shop/star earrings", "min": 1, "max": 5, "chance": 0.5},
         ],
     },
     {
