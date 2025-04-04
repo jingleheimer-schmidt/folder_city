@@ -316,7 +316,7 @@ if __name__ == "__main__":
     show_progress_bar("Setting up navigation", random.randint(25, 75))
     setup_navigation()
 
-    show_progress_bar("Designing up the Welcome Center", random.randint(25, 75))
+    show_progress_bar("Planning the Welcome Center", random.randint(25, 75))
     setup_welcome_center()
 
     show_progress_bar("Constructing buildings", random.randint(25, 75))
