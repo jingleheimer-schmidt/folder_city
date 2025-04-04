@@ -422,6 +422,7 @@ for location in LOCATIONS:
 
 
 import matplotlib.pyplot as plt
+from adjustText import adjust_text
 
 # --- Helper Functions ---
 def parse_address(address):
@@ -454,7 +455,6 @@ def get_block_index(num, block_ranges):
 # --- Create the Plot ---
 # Use a light background for a softer look.
 fig, ax = plt.subplots(figsize=(8, 8))
-ax.set_facecolor('#f9f9f9')
 
 # Draw grid lines only for the named streets (y=0..6) and avenues (x=0..6).
 # Use a dotted, semi-transparent line style.
@@ -463,10 +463,16 @@ for i in range(len(STREET_NAMES)):  # y = 0 .. 6
 for i in range(len(AVENUE_NAMES)):   # x = 0 .. 6
     ax.axvline(x=i, color='gray', linestyle=':', linewidth=0.8, alpha=0.7)
 
-# Mark intersections with small, light gray squares.
-for i in range(len(AVENUE_NAMES)):
-    for j in range(len(STREET_NAMES)):
-        ax.plot(i, j, 's', color='lightgray', markersize=4, alpha=0.6)
+# Add the welcome center to the locations list
+LOCATIONS.append({
+    "name": "the welcome center",
+    "block_location": "horizontals/Juniper St blocks/1900-1999 Juniper St",
+    "address": "1995 Juniper St - the welcome center"
+})
+
+texts = []  # We'll collect the text objects here
+x_points = []
+y_points = []
 
 # Plot each location.
 for loc in LOCATIONS:
@@ -488,7 +494,28 @@ for loc in LOCATIONS:
         y = street_idx  # exactly on the street line
         ax.plot(x, y, 'o', color='tab:blue', markersize=8)
         # Slight offset for readability:
-        ax.text(x + 0.05, y - 0.05, label, fontsize=8, color='black')
+        # Use `annotate` instead of `text`
+        txt = ax.annotate(
+            label,
+            xy=(x, y),                 # the point (data coords)
+            xytext=(x, y - 0.5),       # label placed above (because of invert_yaxis)
+            textcoords='data',         # interpret xytext in data coords
+            ha='center', va='bottom',
+            arrowprops=dict(
+                arrowstyle='->',
+                color='gray',
+                alpha=0.5
+            ),
+            bbox=dict(
+                boxstyle='round,pad=0.2',
+                fc='white',            # facecolor
+                ec='none',             # edgecolor
+                alpha=0.7
+            ),
+            fontsize=8,
+            color='black'
+        )
+        texts.append(txt)
     
     # For vertical (avenue) addresses:
     elif road in AVENUE_NAMES:
@@ -500,8 +527,39 @@ for loc in LOCATIONS:
         rel_y = (num - low) / (high - low)
         x = avenue_idx  # exactly on the avenue line
         y = adjusted_block_idx + rel_y
-        ax.plot(x, y, 'o', color='tab:orange', markersize=8)
-        ax.text(x + 0.05, y - 0.05, label, fontsize=8, color='black')
+        ax.plot(x, y, '^', color='tab:orange', markersize=8)
+        # Use `annotate` instead of `text`
+        txt = ax.annotate(
+            label,
+            xy=(x, y),                 # the point (data coords)
+            xytext=(x, y - 0.5),       # label placed above (because of invert_yaxis)
+            textcoords='data',         # interpret xytext in data coords
+            ha='center', va='bottom',
+            arrowprops=dict(
+                arrowstyle='->',
+                color='gray',
+                alpha=0.5
+            ),
+            bbox=dict(
+                boxstyle='round,pad=0.2',
+                fc='white',            # facecolor
+                ec='none',             # edgecolor
+                alpha=0.7
+            ),
+            fontsize=8,
+            color='black'
+        )
+        texts.append(txt)
+
+# Use adjustText to automatically reposition overlapping labels.
+adjust_text(
+    texts,
+    ax=ax,
+    # arrowprops=dict(arrowstyle='->', color='gray', alpha=0.5),
+    force_points=1,               # Increase this if labels still collide with markers
+    expand_points=(3, 3),       # Enlarge the “no-go” area around each marker
+    avoid_self= True,
+)
 
 # Remove the outer bounding box (all spines).
 for spine in ax.spines.values():
