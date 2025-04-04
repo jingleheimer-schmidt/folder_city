@@ -1,4 +1,5 @@
 import os
+import sys
 import random
 import shutil
 from pathlib import Path
@@ -48,7 +49,12 @@ AVENUE_NUMBERS = [
 ]
 
 # Define key locations
-BASE_PATH = Path(os.getcwd())
+if getattr(sys, 'frozen', False):
+    # If the application is bundled as an executable, use the directory of the executable.
+    BASE_PATH = Path(sys.executable).parent
+else:
+    # If running in a regular Python environment, use the directory of the script.
+    BASE_PATH = Path(__file__).parent
 MAP_CONTENTS = BASE_PATH / "the welcome center/basement/unmarked box/flash drive/users/home/library/application support/folder city/map contents"
 
 def reset_map_contents():
