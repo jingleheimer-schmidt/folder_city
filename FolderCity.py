@@ -417,3 +417,100 @@ for location in LOCATIONS:
     create_file(building / location["marker"])
     create_symlink(sidewalk, building / location["exit_name"])
     create_objects(building, location["objects"])
+
+
+
+import matplotlib.pyplot as plt
+
+def parse_address(address):
+    """
+    Extracts the numeric part and road name from a string like:
+        "2222 Oak St - the observatory"
+    Returns (number, road_name).
+    """
+    main_part = address.split(" - ")[0]  # e.g. "2222 Oak St"
+    parts = main_part.split()
+    try:
+        num = int(parts[0])
+    except ValueError:
+        return None, None
+    road = " ".join(parts[1:])  # e.g. "Oak St"
+    return num, road
+
+def get_block_index(num, block_ranges):
+    """
+    Given a numeric address (e.g. 2222) and a list of block-range strings
+    like ["1600-1699", "1700-1799", ...], return (i, low, high)
+    where i is the 0-based index of that block, and low/high are
+    the integer boundaries of that range.
+    If the number doesn't fall into any range, return (None, None, None).
+    """
+    for i, rng in enumerate(block_ranges):
+        low_str, high_str = rng.split('-')
+        low = int(low_str)
+        high = int(high_str)
+        if low <= num <= high:
+            return i, low, high
+    return None, None, None
+
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Draw 8 vertical and 8 horizontal lines to form a 7x7 grid of intersections.
+# (Because for 7 blocks, you have lines at 0..7.)
+for i in range(8):
+    ax.axhline(y=i, color='gray', linestyle='--', linewidth=0.8)
+    ax.axvline(x=i, color='gray', linestyle='--', linewidth=0.8)
+
+# Plot each location
+for loc in LOCATIONS:
+    num, road = parse_address(loc["address"])
+    if num is None or road is None:
+        continue
+
+    label = f"{loc['name']}\n{num} {road}"
+
+    # If it's a street in STREET_NAMES, place it on a horizontal line.
+    if road in STREET_NAMES:
+        street_idx = STREET_NAMES.index(road)
+        block_idx, low, high = get_block_index(num, STREET_NUMBERS)
+        if block_idx is None:
+            continue
+        # Relative position along that block
+        rel_x = (num - low) / (high - low + 1)
+        x = block_idx + rel_x
+        y = street_idx  # exactly on the line for that street
+        ax.plot(x, y, 'o', color='tab:blue')
+        ax.text(x, y, label, ha='center', va='bottom', fontsize=8)
+
+    # If it's an avenue in AVENUE_NAMES, place it on a vertical line.
+    elif road in AVENUE_NAMES:
+        avenue_idx = AVENUE_NAMES.index(road)
+        block_idx, low, high = get_block_index(num, AVENUE_NUMBERS)
+        if block_idx is None:
+            continue
+        # Relative position along that block
+        rel_y = (num - low) / (high - low + 1)
+        x = avenue_idx  # exactly on the line for that avenue
+        y = block_idx + rel_y
+        ax.plot(x, y, 'o', color='tab:orange')
+        ax.text(x, y, label, ha='center', va='bottom', fontsize=8)
+
+# Label the axes
+ax.set_title("Folder City Map")
+ax.set_xlim(-0.2, 7.2)
+ax.set_ylim(-0.2, 7.2)
+
+# Put street names on the horizontal axis ticks from 0..6
+# (since those lines represent the streets)
+ax.set_yticks(range(len(STREET_NAMES)))
+ax.set_yticklabels(STREET_NAMES)
+
+# Put avenue names on the vertical axis ticks from 0..6
+# (since those lines represent the avenues)
+ax.set_xticks(range(len(AVENUE_NAMES)))
+ax.set_xticklabels(AVENUE_NAMES, rotation=45, ha='right')
+
+ax.invert_yaxis()  # optional: so Birch St is at the top, Willow St at the bottom
+
+plt.tight_layout()
+plt.show()
