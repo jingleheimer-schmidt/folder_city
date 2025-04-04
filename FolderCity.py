@@ -580,4 +580,13 @@ ax.invert_yaxis()
 
 ax.set_title("Folder City Map", fontsize=12)
 plt.tight_layout()
+
+# Define the output path in the welcome center folder.
+welcome_center = BASE_PATH / "the welcome center"
+output_path = welcome_center / "frammed_map.png"
+
+# Save the figure as a PNG file with a high DPI (for good quality).
+plt.savefig(str(output_path), dpi=300)
+
+# Optionally, then show the figure.
 plt.show()
