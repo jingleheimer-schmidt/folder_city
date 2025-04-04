@@ -299,7 +299,7 @@ def open_welcome_center():
         subprocess.Popen(['xdg-open', str(welcome_center_path)])
 
 def show_progress_bar(description, length):
-    with tqdm(total=length, desc=description, bar_format="{l_bar}{bar:50}", ascii=True) as pbar:
+    with tqdm(total=length, desc=description, bar_format="{l_bar:35}{bar:50}", ascii=True) as pbar:
         for i in range(length):
             time.sleep(0.02)
             pbar.update(1)
