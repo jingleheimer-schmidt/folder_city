@@ -293,18 +293,18 @@ def open_welcome_center():
     else:  # Linux and others
         subprocess.Popen(['xdg-open', str(welcome_center_path)])
 
+def show_progress_bar(description, length):
+    with tqdm(total=length, desc=description, bar_format="{l_bar}{bar:50}", ascii=True) as pbar:
+        for i in range(length):
+            time.sleep(0.02)
+            pbar.update(1)
+
 
 # only run when executed, not while importing
 if __name__ == "__main__":
 
     banner = pyfiglet.figlet_format(text="Folder City", font="cricket")
     print(banner, flush=True)
-
-    def show_progress_bar(description, length):
-        with tqdm(total=length, desc=description, bar_format="{l_bar}{bar:50}", ascii=True) as pbar:
-            for i in range(length):
-                time.sleep(0.02)
-                pbar.update(1)
 
     # Run setup functions
     show_progress_bar("Initializing", random.randint(25, 75))
