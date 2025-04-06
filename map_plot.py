@@ -49,8 +49,6 @@ def draw_map(BASE_PATH, LOCATIONS, STREET_NAMES, AVENUE_NAMES, STREET_NUMBERS, A
     })
 
     texts = []  # We'll collect the text objects here
-    x_points = []
-    y_points = []
 
     # Plot each location.
     for loc in LOCATIONS:
