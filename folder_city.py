@@ -1,21 +1,9 @@
 
-banner = """ _______       __    __             _______ __ __         
-|   _   .-----|  .--|  .-----.----.|   _   |__|  |_.--.--.
-|.  1___|  _  |  |  _  |  -__|   _||.  1___|  |   _|  |  |
-|.  __) |_____|__|_____|_____|__|  |.  |___|__|____|___  |
-|:  |                              |:  1   |       |_____|
-|::.|                              |::.. . |              
-`---'                              `-------'              """
-print(banner, flush=True)
-
-# print each character of the banner, line by line
-
-
+import time
 import os
 import sys
 import random
 import shutil
-import time
 from tqdm import tqdm
 from pathlib import Path
 from typing import List, Dict, Union
@@ -300,9 +288,24 @@ def show_progress_bar(description, length):
             time.sleep(0.02)
             pbar.update(1)
 
+# print each character of the banner, line by line
+def print_banner_by_char():
+    banner = """ _______       __    __             _______ __ __         
+|   _   .-----|  .--|  .-----.----.|   _   |__|  |_.--.--.
+|.  1___|  _  |  |  _  |  -__|   _||.  1___|  |   _|  |  |
+|.  __) |_____|__|_____|_____|__|  |.  |___|__|____|___  |
+|:  |                              |:  1   |       |_____|
+|::.|                              |::.. . |              
+`---'                              `-------'              """
+    for char in banner:
+        print(char, end='', flush=True)
+        if not char == ' ':
+            time.sleep(0.01)  # Adjust the speed of printing each character
+    print() # new line at the end
 
-# only run when executed, not while importing
+
 if __name__ == "__main__":
+    print_banner_by_char()
 
     # Run setup functions
     show_progress_bar("Initializing", random.randint(25, 75))
