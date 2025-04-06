@@ -326,13 +326,3 @@ if __name__ == "__main__":
     show_progress_bar("Drawing the map", random.randint(25, 75))
     draw_map(BASE_PATH, LOCATIONS, STREET_NAMES, AVENUE_NAMES, STREET_NUMBERS, AVENUE_NUMBERS)
 
-    # Open the welcome center folder
-    # open_welcome_center()
-
-    print("\a", flush=True)  # This sends the ASCII bell character, which may beep in some terminals
-
-    # Exit the program.
-    # Note: If this executable was built with the --windowed flag (on Windows or macOS),
-    # no terminal window will appear at all. For command-line launched executables, the terminal
-    # might stay open unless it was opened solely to run the app.
-    sys.exit()
