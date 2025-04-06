@@ -1,5 +1,15 @@
 
-print("__name__ =", __name__)
+banner = """ _______       __    __             _______ __ __         
+|   _   .-----|  .--|  .-----.----.|   _   |__|  |_.--.--.
+|.  1___|  _  |  |  _  |  -__|   _||.  1___|  |   _|  |  |
+|.  __) |_____|__|_____|_____|__|  |.  |___|__|____|___  |
+|:  |                              |:  1   |       |_____|
+|::.|                              |::.. . |              
+`---'                              `-------'              """
+print(banner, flush=True)
+
+# print each character of the banner, line by line
+
 
 import os
 import sys
@@ -307,9 +317,6 @@ def show_progress_bar(description, length):
 
 # only run when executed, not while importing
 if __name__ == "__main__":
-
-    banner = pyfiglet.figlet_format(text="Folder City", font="cricket")
-    print(banner, flush=True)
 
     # Run setup functions
     show_progress_bar("Initializing", random.randint(25, 75))
