@@ -15,9 +15,6 @@ import os
 import sys
 import random
 import shutil
-import platform
-import subprocess
-import pyfiglet
 import time
 from tqdm import tqdm
 from pathlib import Path
@@ -298,15 +295,6 @@ def create_locations():
         create_file(building / location["marker"])
         create_symlink(sidewalk, building / location["exit_name"])
         create_objects(building, location["objects"])
-
-def open_welcome_center():
-    welcome_center_path = BASE_PATH / 'the welcome center'
-    if platform.system() == 'Windows':
-        os.startfile(str(welcome_center_path))
-    elif platform.system() == 'Darwin':  # macOS
-        subprocess.Popen(['open', str(welcome_center_path)])
-    else:  # Linux and others
-        subprocess.Popen(['xdg-open', str(welcome_center_path)])
 
 def show_progress_bar(description, length):
     with tqdm(total=length, desc=description, bar_format="{l_bar:35}{bar:50}", ascii=True) as pbar:
