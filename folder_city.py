@@ -22,6 +22,14 @@ from typing import List, Dict, Union
 from locations import LOCATIONS
 from map_plot import draw_map
 
+# Define key locations
+if getattr(sys, 'frozen', False):
+    # If the application is bundled as an executable, use the directory of the executable.
+    BASE_PATH = Path(sys.executable).parent
+else:
+    # If running in a regular Python environment, use the directory of the script.
+    BASE_PATH = Path(__file__).parent
+MAP_CONTENTS = BASE_PATH / "the welcome center/basement/unmarked box/flash drive/users/home/library/application support/folder city/map contents"
 
 # Define street and avenue names
 STREET_NAMES = [
@@ -63,15 +71,6 @@ AVENUE_NUMBERS = [
     "600-699",
     "700-799",
 ]
-
-# Define key locations
-if getattr(sys, 'frozen', False):
-    # If the application is bundled as an executable, use the directory of the executable.
-    BASE_PATH = Path(sys.executable).parent
-else:
-    # If running in a regular Python environment, use the directory of the script.
-    BASE_PATH = Path(__file__).parent
-MAP_CONTENTS = BASE_PATH / "the welcome center/basement/unmarked box/flash drive/users/home/library/application support/folder city/map contents"
 
 def reset_map_contents():
     """Delete the welcome center folder if it already exists"""
