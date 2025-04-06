@@ -285,7 +285,7 @@ def create_locations():
 def show_progress_bar(description, length):
     with tqdm(total=length, desc=description, bar_format="{l_bar:35}{bar:50}", ascii=True) as pbar:
         for i in range(length):
-            time.sleep(0.02)
+            time.sleep(0.015)
             pbar.update(1)
 
 # print each character of the banner, line by line
