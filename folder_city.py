@@ -22,7 +22,6 @@ from typing import List, Dict, Union
 from locations import LOCATIONS
 from map_plot import draw_map
 
-print(os.path.join(os.path.dirname(pyfiglet.__file__), "fonts"))
 
 # Define street and avenue names
 STREET_NAMES = [
